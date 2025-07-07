@@ -1,0 +1,9 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    // İlk child (ör. Home Page) sayfasına yönlendir
+    var firstChild = Model.Children().FirstOrDefault();
+    if (firstChild != null)
+    {
+        Response.Redirect(firstChild.Url());
+    }
+}
