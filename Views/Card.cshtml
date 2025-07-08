@@ -1,0 +1,49 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+     
+@{
+    var cardId = "card-" + Model.Id;
+    var isBedelsiz = (Model.Value("title") != null && Model.Value("title").ToString().Trim().ToLower() == "bedelsiz sermaye arttırımları");
+}
+
+<div class="card-accordion" style="margin-bottom: 16px;">
+    <div onclick="toggleCard('@cardId')" style="cursor:pointer; background:#f5f5f5; padding:14px 18px; border:1px solid #1976d2; font-weight:bold; font-size:20px; border-radius:6px 6px 0 0; display:flex; align-items:center; justify-content:space-between;">
+        <span>@Model.Value("title")</span>
+        <span style="font-size:22px; transition:transform 0.2s;">&#9660;</span>
+    </div>
+    <div id="@cardId" style="display:none; border:1px solid #1976d2; border-top:none; padding:18px; border-radius:0 0 6px 6px; background:#fff;">
+        @if (isBedelsiz)
+        {
+            <div style="text-align:center;">
+                <h2 style="margin-bottom:18px;">Bedelsiz Sermaye Arttırımları</h2>
+                <form id="bedelsizForm" style="width:100%; max-width:500px; margin:0 auto;">
+                    <table style="width:100%; border-collapse:collapse;">
+                        <thead>
+                            <tr style="background:#e9eef6;">
+                                <th style="padding:8px; border:1px solid #ddd; font-size:20px;">SEMBOL</th>
+                                <th style="padding:8px; border:1px solid #ddd; font-size:20px;">LOT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding:8px; border:1px solid #ddd;">
+                                    <input type="text" name="sembol" style="width:100%; box-sizing:border-box; font-size:18px; text-align:center;" />
+                                </td>
+                                <td style="padding:8px; border:1px solid #ddd;">
+                                    <input type="text" name="lot" style="width:100%; box-sizing:border-box; font-size:18px; text-align:center;" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="text-align:center; margin-top:16px;">
+                        <button type="submit" style="background:#1976d2; color:#fff; border:none; padding:10px 32px; border-radius:6px; font-weight:bold; font-size:20px;">KAYDET</button>
+                    </div>
+                </form>
+            </div>
+        }
+        else
+        {
+            @Html.Raw(Model.Value("content"))
+        }
+    </div>
+</div>

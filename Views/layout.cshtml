@@ -43,11 +43,17 @@
             }
         </ul>
     </nav>
-    <main>
-        @RenderBody()
-    </main>
-    <footer>
-        <p>&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</p>
-    </footer>
+    <div class="site-wrapper">
+        <div class="d-flex justify-content-center align-items-start min-vh-100 bg-light">
+            <div class="w-100">
+                <main>
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</p>
+        </footer>
+    </div>
 </body>
 </html>

@@ -1,47 +1,70 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
 @{
-	Layout = "layout.cshtml";
+    Layout = "layout.cshtml";
 }
 
 <!-- Başlık -->
 @if (Model.Value("title") != null)
 {
-	<h1>@Model.Value("title")</h1>
+    <h1>@Model.Value("title")</h1>
 }
 
 <!-- Açıklama -->
 @if (Model.Value("description") != null)
 {
-	<p>@Model.Value("description")</p>
+    <p>@Model.Value("description")</p>
 }
 
 <!-- Görsel -->
 @if (Model.Value("image") != null)
 {
-	var image = Umbraco.Media(Model.Value("image"));
-	if (image != null)
-	{
-		<img src="@image.Url()" alt="@Model.Value("title")" />
-	}
+    var image = Umbraco.Media(Model.Value("image"));
+    if (image != null)
+    {
+        <img src="@image.Url()" alt="@Model.Value("title")" />
+    }
 }
 
-<!-- SEO Title, SEO Description, Keywords (isteğe bağlı olarak sayfa içinde göstermek istersen) -->
+<!-- SEO Title, SEO Description, Keywords -->
 @if (Model.Value("seoTitle") != null)
 {
-	<div style="display:none;">
-		<span>@Model.Value("seoTitle")</span>
-	</div>
+    <div style="display:none;">
+        <span>@Model.Value("seoTitle")</span>
+    </div>
 }
 @if (Model.Value("seoDescription") != null)
 {
-	<div style="display:none;">
-		<span>@Model.Value("seoDescription")</span>
-	</div>
+    <div style="display:none;">
+        <span>@Model.Value("seoDescription")</span>
+    </div>
 }
 @if (Model.Value("keywords") != null)
 {
-	<div style="display:none;">
-		<span>@Model.Value("keywords")</span>
-	</div>
+    <div style="display:none;">
+        <span>@Model.Value("keywords")</span>
+    </div>
 }
+
+@foreach (var child in Model.Children)
+{
+    @Html.Partial("Card", child)
+}
+
+<script>
+    function toggleCard(id) {
+        var el = document.getElementById(id);
+        if (el.style.display === "none" || el.style.display === "") {
+            el.style.display = "block";
+        } else {
+            el.style.display = "none";
+        }
+    }
+
+    document.getElementById('bedelsizForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Form verisi kaydedilecek (demo).');
+    });
+</script>
+
