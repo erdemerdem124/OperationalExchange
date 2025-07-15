@@ -8,7 +8,7 @@
 <!-- Başlık -->
 @if (Model.Value("title") != null)
 {
-    <h1>@Model.Value("title")</h1>
+    <h1 style="color: #fff !important;">@Model.Value("title")</h1>
 }
 
 <!-- Açıklama -->
@@ -53,18 +53,82 @@
 }
 
 <script>
-    function toggleCard(id) {
-        var el = document.getElementById(id);
-        if (el.style.display === "none" || el.style.display === "") {
-            el.style.display = "block";
+function secimYap(el, olumlu) {
+    const hucre = el.parentElement;
+    const tumButonlar = hucre.querySelectorAll('.secim-btn');
+    tumButonlar.forEach(btn => {
+        btn.classList.remove('secilen');
+        btn.classList.remove('red-secilen');
+    });
+    if (olumlu) {
+        el.classList.add('secilen');
         } else {
-            el.style.display = "none";
+        el.classList.add('red-secilen');
         }
     }
 
-    document.getElementById('bedelsizForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        alert('Form verisi kaydedilecek (demo).');
+    document.addEventListener('DOMContentLoaded', function() {
+        var bedelsizForm = document.getElementById('bedelsizForm');
+        if (bedelsizForm) {
+            bedelsizForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Form verisi kaydedilecek (demo).');
+            });
+        } else {
+        }
+    });
+
+document.querySelectorAll('.secim-btn').forEach(function(el, i){
+    el.addEventListener('click', function(){
+        const olumlu = el.textContent.trim() === '✓';
+        const hucre = el.parentElement;
+        const tumButonlar = hucre.querySelectorAll('.secim-btn');
+        tumButonlar.forEach(btn => {
+            btn.classList.remove('secilen');
+            btn.classList.remove('red-secilen');
+        });
+        if (olumlu) {
+            el.classList.add('secilen');
+        } else {
+            el.classList.add('red-secilen');
+        }
+    });
     });
 </script>
+
+<style>
+    span.secim-btn, .secim-btn, .secim-btn:hover, td .secim-btn, .secim-hucre .secim-btn {
+      cursor: pointer !important;
+    }
+    .secim-btn {
+        cursor: pointer !important;
+        padding: 4px 8px;
+        margin: 0 4px;
+        display: inline-block;
+        font-size: 1.2em;
+        border-radius: 4px;
+        transition: background 0.2s, color 0.2s;
+    }
+    .secim-btn:first-child {
+        color: #43a047 !important; /* Tik: yeşil */
+    }
+    .secim-btn:last-child {
+        color: #e53935 !important; /* Çarpı: kırmızı */
+    }
+    .secim-btn.secilen {
+        background-color: #e6ffe6 !important;
+        color: #43a047 !important;
+        font-weight: bold;
+    }
+    .secim-btn.red-secilen {
+        background-color: #ffe6e6 !important;
+        color: #e53935 !important;
+        font-weight: bold;
+    }
+    .secim-btn:hover {
+        filter: brightness(1.15);
+    }
+</style>
+
+
 

@@ -10,6 +10,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <title>
         @if (!string.IsNullOrWhiteSpace(metaTitle?.ToString()))
         {
@@ -28,32 +29,99 @@
     <!-- Open Graph örneği -->
     <meta property="og:title" content="@metaTitle ?? Model.Value("title")" />
     <meta property="og:description" content="@metaDescription" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li class="@(Model.Id == root.Id ? "active" : "")">
-                <a href="@root.Url()">@root.Name</a>
-            </li>
-            @foreach (var item in menuItems)
-            {
-                <li class="@(Model.Id == item.Id ? "active" : "")">
-                    <a href="@item.Url()">@item.Name</a>
-                </li>
-            }
-        </ul>
-    </nav>
-    <div class="site-wrapper">
-        <div class="d-flex justify-content-center align-items-start min-vh-100 bg-light">
-            <div class="w-100">
-                <main>
-                    @RenderBody()
-                </main>
+    <div class="modern-sidebar-layout">
+        <nav class="modern-sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-fixed-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#90caf9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <polyline points="1 20 1 14 7 14"></polyline>
+                        <path d="M3.51 9a9 9 0 0 1 14.13-3.36L23 10M1 14l5.36 5.36A9 9 0 0 0 20.49 15"></path>
+                    </svg>
+                </div>
+                <button class="sidebar-toggle-new" id="newSidebarToggle" aria-label="Menüyü Aç/Kapat">
+                    <svg class="icon-open" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                    <svg class="icon-closed" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
             </div>
+            <ul>
+                <li class="@(Model.Id == root.Id ? "active" : "")">
+                    <a href="@root.Url()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        Giriş
+                    </a>
+                </li>
+                @foreach (var item in menuItems)
+                {
+                    <li class="@(Model.Id == item.Id ? "active" : "")">
+                        <a href="@item.Url()">
+                            @if (item.Name == "İşlemler")
+                            {
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                </svg>
+                            }
+                            @if (item.Name == "Portföy")
+                            {
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"></path>
+                                    <path d="M22 6h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4V6z"></path>
+                                </svg>
+                            }
+                            @if (item.Name == "Özet")
+                            {
+                                <!-- Pie chart (pasta grafik, finansal özet) ikon -->
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                  <path d="M21 12A9 9 0 1 1 12 3v9z"></path>
+                                  <path d="M12 3a9 9 0 0 1 9 9h-9z"></path>
+                                </svg>
+                            }
+                            @if (item.Name == "Fırsatlar")
+                            {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                            }
+                            @if (item.Name == "Teknik")
+                            {
+                                <!-- Chip/settings (teknik/finansal teknoloji) ikon -->
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                  <rect x="7" y="7" width="10" height="10" rx="2"></rect>
+                                  <path d="M4 4v3M4 17v3M20 4v3M20 17v3M4 4h3M17 4h3M4 20h3M17 20h3"/>
+                                </svg>
+                            }
+                            @item.Name
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+        <div class="modern-sidebar-content" id="sidebarContent">
+            @RenderBody()
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</p>
+            </footer>
         </div>
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</p>
-        </footer>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const sidebarContent = document.getElementById('sidebarContent');
+        const toggleBtn = document.getElementById('newSidebarToggle');
+        toggleBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('closed');
+            sidebarContent.classList.toggle('expanded');
+        });
+    </script>
 </body>
 </html>

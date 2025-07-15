@@ -1,0 +1,277 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Deneme1.Models;
+@{
+    Layout = "layout.cshtml";
+
+    var kartlar = new List<dynamic>
+    {
+        new { Baslik = "Günlük Arbitraj Sayısı", Deger = 12, Ikon = "bi-graph-up" },
+        new { Baslik = "Günlük Toplam Hacim", Deger = "1.250.000 ₺", Ikon = "bi-cash-coin" },
+        new { Baslik = "Unwind Kar", Deger = "32.000 ₺", Ikon = "bi-arrow-repeat" },
+        new { Baslik = "Günlük Komisyon", Deger = "2.500 ₺", Ikon = "bi-percent" }
+    };
+}
+
+<h1>Teknik Sayfası</h1>
+
+<div class="container mt-4">
+    <div class="row g-4">
+        @foreach (var kart in kartlar)
+        {
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="card teknik-kart text-center h-100 shadow-sm">
+                    <div class="card-body">
+                        <i class="bi @kart.Ikon fs-1 mb-2"></i>
+                        <h5 class="card-title">@kart.Baslik</h5>
+                        <p class="card-text display-6 fw-bold">@kart.Deger</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Portföy Sağlama Tablosu -->
+<table id="bist-operational-path-config-table">
+    <thead>
+      <tr>
+        <th class="hidden">Sıra No</th>
+        <th>Yön</th>
+        <th class="hidden">1. Borsa</th>
+        <th class="hidden">2. Borsa</th>
+        <th class="hidden">3. Borsa</th>
+        <th class="hidden">4. Borsa</th>
+        <th class="hidden">Input String</th>
+        <th>Min. Getiri Limiti</th>
+        <th>Aktif</th>
+        <th>Fırsat Göster</th>
+        <th>Para Limiti</th>
+        <th class="hidden">Seri İşlem</th>
+        <th class="hidden">Robot No</th>
+        <th class="hidden">Max Emir Büyüklüğü</th>
+        <th class="hidden">Max Paralel İşlem</th>
+        <th class="hidden">Min Emir Büyüklüğü</th>
+        <th class="hidden">Slippage Koruması</th>
+        <th class="hidden">Max Fiyat Zaman Farkı</th>
+        <th class="hidden">Arbitrage Arası Delay</th>
+        <th class="hidden">Yol Delay</th>
+        <th class="hidden">Fırsat Ömür Alt Limit</th>
+        <th class="hidden">Fırsat Loglama Limiti</th>
+        <th>Günlük Hacim</th>
+        <th>Ağr. Basit Ortalama</th>
+        <th>Unwind</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="hidden">1</td>
+        <td>DÜZ / AKBNK</td>
+        <td class="hidden">BIST</td>
+        <td class="hidden">VIOP</td>
+        <td class="hidden">—</td>
+        <td class="hidden">—</td>
+        <td class="hidden">DUZ-AKBNK</td>
+        <td><input type="text" value="%1,25" /></td>
+        <td>
+          <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+        </td>
+        <td>
+          <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+        </td>
+        <td><input type="text" value="50000 ₺" /></td>
+        <!-- Hidden -->
+        <td class="hidden"><label class="switch"><input type="checkbox" /></label></td>
+        <td class="hidden"><input type="text" value="1" /></td>
+        <td class="hidden"><input type="text" value="$1000" /></td>
+        <td class="hidden">2</td>
+        <td class="hidden">$100</td>
+        <td class="hidden">%0,05</td>
+        <td class="hidden">100 ms</td>
+        <td class="hidden">500 ms</td>
+        <td class="hidden">300 ms</td>
+        <td class="hidden">1500 ms</td>
+        <td class="hidden">1000 ms</td>
+        <td class="hidden">10%</td>
+        <td class="try-cell">120.000</td>
+        <td>2,10%</td>
+        <td class="try-cell">9.000</td>
+      </tr>
+
+      <tr>
+        <td class="hidden">2</td>
+        <td>TERS / AKBNK</td>
+        <td class="hidden">VIOP</td>
+        <td class="hidden">BIST</td>
+        <td class="hidden">—</td>
+        <td class="hidden">—</td>
+        <td class="hidden">TERS-AKBNK</td>
+        <td><input type="text" value="%1,00" /></td>
+        <td>
+          <label class="switch"><input type="checkbox" /><span class="slider"></span></label>
+        </td>
+        <td>
+          <label class="switch"><input type="checkbox" checked /><span class="slider"></span></label>
+        </td>
+        <td><input type="text" value="30000 ₺" /></td>
+        <!-- Hidden -->
+        <td class="hidden"><label class="switch"><input type="checkbox" /></label></td>
+        <td class="hidden"><input type="text" value="2" /></td>
+        <td class="hidden"><input type="text" value="$500" /></td>
+        <td class="hidden">1</td>
+        <td class="hidden">$50</td>
+        <td class="hidden">%0,03</td>
+        <td class="hidden">200 ms</td>
+        <td class="hidden">600 ms</td>
+        <td class="hidden">300 ms</td>
+        <td class="hidden">1500 ms</td>
+        <td class="hidden">20%</td>
+        <td class="try-cell">100.000</td>
+        <td>1,80%</td>
+        <td class="try-cell">7.000</td>
+      </tr>
+
+      <!-- Toplam satır -->
+      <tr>
+        <td colspan="22"></td>
+        <td class="try-cell">220.000</td>
+        <td></td>
+        <td class="try-cell">16.000</td>
+      </tr>
+    </tbody>
+  </table>
+
+<div class="accordion mt-4" id="manuelBistAccordionCustom">
+  <div class="accordion-item">
+    <div class="accordion-header-custom" data-bs-toggle="collapse" data-bs-target="#manuelBistCollapseCustom" aria-expanded="false" aria-controls="manuelBistCollapseCustom">
+      Manuel Bist Emir
+      <span class="accordion-arrow" style="@(panelHepAcik ? "display:none;" : "")">&#9650;</span>
+</div>
+    <div id="manuelBistCollapseCustom" class="accordion-collapse collapse" aria-labelledby="manuelBistHeadingCustom" data-bs-parent="#manuelBistAccordionCustom">
+      <div class="accordion-body">
+        <form>
+          <div class="row mb-3">
+            <div class="col">
+              <label class="form-label text-muted" style="font-size:0.95rem;">Sembol</label>
+              <input type="text" class="form-control" />
+                </div>
+            <div class="col">
+              <label class="form-label text-muted" style="font-size:0.95rem;">Yön</label>
+              <select class="form-control">
+                <option>AL</option>
+                <option>SAT</option>
+              </select>
+                </div>
+            <div class="col">
+              <label class="form-label text-muted" style="font-size:0.95rem;">Adet</label>
+              <input type="number" class="form-control" value="0" />
+                </div>
+            <div class="col">
+              <label class="form-label text-muted" style="font-size:0.95rem;">Emir Tipi</label>
+              <select class="form-control">
+                <option>Limit</option>
+                <option>Piyasa</option>
+              </select>
+                </div>
+            <div class="col">
+              <label class="form-label text-muted" style="font-size:0.95rem;">Fiyat*</label>
+              <input type="number" class="form-control" value="0" />
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary px-5">İLET</button>
+            </div>
+        </form>
+    </div>
+</div>
+  </div>
+</div>
+
+<!-- Stil -->
+<style>
+  .teknik-secilen { background-color: #e6ffe6 !important; color: #43a047 !important; font-weight: bold; border-radius: 4px; transition: background 0.2s, color 0.2s; }
+  .teknik-red-secilen { background-color: #ffe6e6 !important; color: #e53935 !important; font-weight: bold; border-radius: 4px; transition: background 0.2s, color 0.2s; }
+  .teknik-secim-btn { cursor: pointer !important; padding: 4px 8px; margin: 0 4px; display: inline-block; font-size: 1.2em; transition: background 0.2s, color 0.2s; }
+  .teknik-secim-btn:hover { cursor: pointer !important; filter: brightness(1.15); }
+  .secim-hucre { text-align: center; }
+</style>
+
+<table class="w-fit min-w-(--thread-content-width)" style="min-width: 75px; border-collapse: collapse">
+    <colgroup>
+        <col style="min-width: 25px">
+        <col style="min-width: 25px">
+        <col style="min-width: 25px">
+    </colgroup>
+    <tbody>
+        <tr>
+            <th style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p><strong>Hisse</strong></p>
+            </th>
+            <th style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p><strong>Teminat</strong></p>
+            </th>
+            <th style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p><strong>Seçim</strong></p>
+            </th>
+        </tr>
+        <tr>
+            <td style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p>ASELS</p>
+            </td>
+            <td style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p></p>
+            </td>
+            <td class="secim-hucre" style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p><span class="teknik-secim-btn" onclick="teknikSecimYap(this, true)">✓</span> <span class="teknik-secim-btn" onclick="teknikSecimYap(this, false)">✗</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p>THYAO</p>
+            </td>
+            <td style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p></p>
+            </td>
+            <td class="secim-hucre" style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p><span class="teknik-secim-btn" onclick="teknikSecimYap(this, true)">✓</span> <span class="teknik-secim-btn" onclick="teknikSecimYap(this, false)">✗</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p>SISE</p>
+            </td>
+            <td style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p></p>
+            </td>
+            <td class="secim-hucre" style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p><span class="teknik-secim-btn" onclick="teknikSecimYap(this, true)">✓</span> <span class="teknik-secim-btn" onclick="teknikSecimYap(this, false)">✗</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p>TUPRS</p>
+            </td>
+            <td style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p></p>
+            </td>
+            <td class="secim-hucre" style="padding: 6px 12px" colspan="1" rowspan="1">
+                <p><span class="teknik-secim-btn" onclick="teknikSecimYap(this, true)">✓</span> <span class="teknik-secim-btn" onclick="teknikSecimYap(this, false)">✗</span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script>
+  function teknikSecimYap(el, olumlu) {
+    const hucre = el.parentElement;
+    const tumButonlar = hucre.querySelectorAll('.teknik-secim-btn');
+    tumButonlar.forEach(btn => {
+      btn.classList.remove('teknik-secilen');
+      btn.classList.remove('teknik-red-secilen');
+    });
+    if (olumlu) {
+      el.classList.add('teknik-secilen');
+    } else {
+      el.classList.add('teknik-red-secilen');
+    }
+  }
+</script>

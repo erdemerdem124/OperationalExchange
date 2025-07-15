@@ -17,13 +17,7 @@ public class WebSiteController : RenderController
 
     public override IActionResult Index()
     {
-        // Kök node'un ilk child'ı (Portföy sayfası) bulunur
-        var portfolio = CurrentPage.Children().FirstOrDefault(x => x.ContentType.Alias == "portfolioPage" || x.Name.ToLower().Contains("portföy") || x.Name.ToLower().Contains("portfolio"));
-        if (portfolio != null)
-        {
-            return Redirect(portfolio.Url());
-        }
-        // Eğer Portföy yoksa, 404 döndür
-        return NotFound();
+        // Otomatik yönlendirme kaldırıldı, sadece view döndürülüyor
+        return CurrentTemplate(CurrentPage);
     }
 }

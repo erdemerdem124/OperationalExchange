@@ -1,1 +1,42 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@using Umbraco.Cms.Web.Common.Security
+@inject MemberSignInManager MemberSignInManager
+@{
+    Layout = "layout.cshtml";
+    var error = TempData["LoginError"] as string;
+    var isAuthenticated = MemberSignInManager.IsSignedIn(User);
+}
+@if (!isAuthenticated)
+{
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="card shadow p-4" style="width: 100%; max-width: 400px;">
+            <h2 class="mb-4 text-center">Giriş Yap</h2>
+            @if (!string.IsNullOrEmpty(error))
+            {
+                <div class="alert alert-danger" style="font-size: 1.1rem; font-weight: 400; letter-spacing: 0.5px; padding: 18px 10px; border-radius: 8px; text-align: center;">@error</div>
+            }
+            <form method="post" action="/umbraco/surface/giris/login">
+                @Html.AntiForgeryToken()
+                <div class="mb-3">
+                    <label for="username" class="form-label">Kullanıcı Adı</label>
+                    <input type="text" class="form-control" id="username" name="username" required autocomplete="username" />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Şifre</label>
+                    <input type="password" class="form-control" id="password" name="password" required autocomplete="current-password" />
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Giriş Yap</button>
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container mt-5">
+        <h2 style="color: #fff;">Hoş geldiniz, @User.Identity.Name!</h2>
+        <form method="post" action="/umbraco/surface/giris/logout" style="margin-top: 24px;">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-outline-light">Çıkış Yap</button>
+        </form>
+    </div>
+}
