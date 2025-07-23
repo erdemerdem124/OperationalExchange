@@ -20,9 +20,10 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-"applicationUrl": "https://localhost:44322;http://localhost:9367;https://operationalexchange.com:44322;https://kriptoborsa.com:44322",
-"environmentVariables": {        "ASPNETCORE_ENVIRONMENT": "Development"
-      }      
+      "applicationUrl": "https://localhost:44322;http://localhost:9367;https://operationalexchange.com:44322;https://kriptoborsa.com:44322",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     }
   }
 }

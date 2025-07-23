@@ -67,8 +67,6 @@
     </div>
 }
 
-
-
 @foreach (var child in Model.Children)
 {
     @Html.Partial("Card", child)
@@ -89,7 +87,8 @@ function secimYap(el, olumlu) {
         }
     }
 
-            var bedelsizForm = document.getElementById('bedelsizForm');
+document.addEventListener('DOMContentLoaded', function() {
+    var bedelsizForm = document.getElementById('bedelsizForm');
         if (bedelsizForm) {
             bedelsizForm.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -114,7 +113,7 @@ document.querySelectorAll('.secim-btn').forEach(function(el, i){
             el.classList.add('red-secilen');
         }
     });
-    });
+});
 
     // Yön ve Getiri Ayarları için tik/çarpı seçimi
     function yonGetiriSecimYap(el, olumlu) {
@@ -164,7 +163,6 @@ document.querySelectorAll('.secim-btn').forEach(function(el, i){
     .secim-btn:hover {
         filter: brightness(1.15);
     }
-    
     /* Teknik Kartları için CSS */
     .teknik-kartlar-flex-container {
       display: flex;

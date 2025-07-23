@@ -61,15 +61,3 @@
 body, .bg-light {
     background: #f7f9fb !important;
 }
-<script>
-document.getElementById('excelAktarBtn').addEventListener('click', function () {
-    var table = document.getElementById('kapanmis-bist-vadeli-islemler-table');
-    var html = table.outerHTML.replace(/ /g, '%20');
-    var filename = 'gunluk_islem_dokumu.xls';
-
-    var a = document.createElement('a');
-    a.href = 'data:application/vnd.ms-excel,' + html;
-    a.download = filename;
-    a.click();
-});
-</script>

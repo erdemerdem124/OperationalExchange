@@ -36,9 +36,10 @@
         <nav class="modern-sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-fixed-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24">
-                      <circle cx="12" cy="12" r="12" fill="#43a047"/>
-                      <path fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M7 13l3 3l7-7"/>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#90caf9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10"></polyline>
+                        <polyline points="1 20 1 14 7 14"></polyline>
+                        <path d="M3.51 9a9 9 0 0 1 14.13-3.36L23 10M1 14l5.36 5.36A9 9 0 0 0 20.49 15"></path>
                     </svg>
                 </div>
                 <button class="sidebar-toggle-new" id="newSidebarToggle" aria-label="Menüyü Aç/Kapat">
@@ -51,11 +52,6 @@
                 </button>
             </div>
             <ul>
-                <li style="text-align:center; list-style:none; margin-bottom: 18px;">
-                    <a href="https://www.finrix.io" target="_blank" rel="noopener noreferrer">
-                    <img src="/media/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-07-16%20223529.png" alt="Finrix Logo" style="width:48px; height:48px; border-radius:50%; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.07); margin:auto; display:block;" />
-                    </a>
-                </li>
                 <li class="@(Model.Id == root.Id ? "active" : "")">
                     <a href="@root.Url()">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -73,8 +69,9 @@
                         <a href="@item.Url()">
                             @if (item.Name == "İşlemler")
                             {
-                                <!-- Fırsatlar'ın ikonu -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                </svg>
                             }
                             @if (item.Name == "Portföy")
                             {
@@ -93,10 +90,7 @@
                             }
                             @if (item.Name == "Fırsatlar")
                             {
-                                <!-- İşlemler'in ikonu -->
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
                             }
                             @if (item.Name == "Teknik")
                             {
@@ -114,8 +108,8 @@
         </nav>
         <div class="modern-sidebar-content" id="sidebarContent">
             @RenderBody()
-            <footer style="margin-bottom:0 !important; padding-bottom:0 !important;">
-                <p style="margin-bottom:0; padding-bottom:0;">&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</p>
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</p>
             </footer>
         </div>
     </div>

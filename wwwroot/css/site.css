@@ -1256,74 +1256,54 @@ th, td {
     color: #007bff;
 }
 
-button.kucuk-kaydet-btn,
-.kucuk-kaydet-btn {
-    background: #1976d2 !important;
-    color: #fff !important;
-    font-size: 14px !important;
-    font-weight: 500;
-    padding: 6px 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.2s;
-    outline: none;
-    display: inline-block;
-    box-shadow: none !important;
-}
-button.kucuk-kaydet-btn:hover,
-.kucuk-kaydet-btn:hover {
-    background: #1565c0 !important;
-}
-
-.bedelsiz-panel-input {
-    background: #fff !important;
-    color: #222 !important;
-    border: 1px solid #bbb !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-}
-
-/* Çıkış Yap butonu için kırmızı stil - EN SONA EKLENDİ */
-button.kucuk-kaydet-btn.cikis-btn,
-.kucuk-kaydet-btn.cikis-btn {
-    background: linear-gradient(180deg, #e53935 0%, #b71c1c 100%) !important;
-    color: #fff !important;
-    border: none !important;
-    box-shadow: 0 2px 8px rgba(229,57,53,0.12) !important;
-}
-button.kucuk-kaydet-btn.cikis-btn:hover,
-.kucuk-kaydet-btn.cikis-btn:hover {
-    background: linear-gradient(180deg, #b71c1c 0%, #e53935 100%) !important;
-}
-.secim-btn {
+.card-header, .card-header.card-toggle {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    font-size: 20px;
-    font-weight: bold;
-    margin: 2px;
-    transition: all 0.2s ease;
+    position: relative;
     cursor: pointer;
+    background: #2c3e66;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 500;
+    min-height: 48px;
+    border-radius: 4px 4px 0 0;
+    padding: 0 16px;
 }
-
-.secim-btn:nth-child(1) {
-    color: #00d26a; /* Yeşil */
+.card-header.open .card-arrow {
+    transform: rotate(180deg) !important;
 }
-
-.secim-btn:nth-child(2) {
-    color: #ff4c4c; /* Kırmızı */
+.card-arrow {
+    transition: transform 0.2s;
+    display: inline-block;
 }
-
-.secim-btn.active:nth-child(1) {
-    background-color: rgba(0, 210, 106, 0.15);
-    box-shadow: 0 0 2px rgba(0, 210, 106, 0.3);
+.custom-table th, .custom-table td {
+    color: #fff !important;
 }
-
-.secim-btn.active:nth-child(2) {
-    background-color: rgba(255, 76, 76, 0.15);
-    box-shadow: 0 0 2px rgba(255, 76, 76, 0.3);
+.kucuk-kaydet-btn {
+    background: linear-gradient(180deg, #2c3e5c 0%, #22325a 100%);
+    color: #fff;
+    font-size: 0.95em;
+    font-weight: 500;
+    padding: 3px 16px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+    margin-bottom: 6px;
+}
+.kucuk-kaydet-btn:hover {
+    background: linear-gradient(180deg, #22325a 0%, #2c3e5c 100%);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+.secim-btn {
+    display: inline-block;
+    font-size: 1.2em;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin: 0 4px;
 }
