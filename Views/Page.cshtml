@@ -1,0 +1,204 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+    Layout = "layout.cshtml";
+}
+
+<!-- Başlık -->
+@if (Model.Value("title") != null)
+{
+    <h1 style="color: #fff !important;">@Model.Value("title")</h1>
+}
+
+<!-- Açıklama -->
+@if (Model.Value("description") != null)
+{
+    <p>@Model.Value("description")</p>
+}
+
+<!-- Görsel -->
+@if (Model.Value("image") != null)
+{
+    var image = Umbraco.Media(Model.Value("image"));
+    if (image != null)
+    {
+        <img src="@image.Url()" alt="@Model.Value("title")" />
+    }
+}
+
+<!-- SEO Title, SEO Description, Keywords -->
+@if (Model.Value("seoTitle") != null)
+{
+    <div style="display:none;">
+        <span>@Model.Value("seoTitle")</span>
+    </div>
+}
+@if (Model.Value("seoDescription") != null)
+{
+    <div style="display:none;">
+        <span>@Model.Value("seoDescription")</span>
+    </div>
+}
+@if (Model.Value("keywords") != null)
+{
+    <div style="display:none;">
+        <span>@Model.Value("keywords")</span>
+    </div>
+}
+
+<!-- Teknik Sayfası için Kartlar (Block List) - Panellerin hemen üstünde -->
+@{
+    var sayfaBaslik = Model.Name?.ToLower();
+    var kartlar = Model.Value<IEnumerable<Umbraco.Cms.Core.Models.Blocks.BlockListItem>>("teknikKartlar");
+}
+@if (sayfaBaslik == "teknik" && kartlar != null && kartlar.Any())
+{
+    <div class="teknik-kartlar-flex-container">
+        @foreach (var kart in kartlar)
+        {
+            var baslik = kart.Content.Value("baslik");
+            var deger = kart.Content.Value("deger");
+            <div class="teknik-kart-block">
+                <div class="teknik-kart-title">@baslik</div>
+                <div class="teknik-kart-value">@deger</div>
+            </div>
+        }
+    </div>
+}
+
+
+
+@foreach (var child in Model.Children)
+{
+    @Html.Partial("Card", child)
+}
+
+<script>
+function secimYap(el, olumlu) {
+    const hucre = el.parentElement;
+    const tumButonlar = hucre.querySelectorAll('.secim-btn');
+    tumButonlar.forEach(btn => {
+        btn.classList.remove('secilen');
+        btn.classList.remove('red-secilen');
+    });
+    if (olumlu) {
+        el.classList.add('secilen');
+        } else {
+        el.classList.add('red-secilen');
+        }
+    }
+
+            var bedelsizForm = document.getElementById('bedelsizForm');
+        if (bedelsizForm) {
+            bedelsizForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Form verisi kaydedilecek (demo).');
+            });
+        } else {
+        }
+    });
+
+document.querySelectorAll('.secim-btn').forEach(function(el, i){
+    el.addEventListener('click', function(){
+        const olumlu = el.textContent.trim() === '✓';
+        const hucre = el.parentElement;
+        const tumButonlar = hucre.querySelectorAll('.secim-btn');
+        tumButonlar.forEach(btn => {
+            btn.classList.remove('secilen');
+            btn.classList.remove('red-secilen');
+        });
+        if (olumlu) {
+            el.classList.add('secilen');
+        } else {
+            el.classList.add('red-secilen');
+        }
+    });
+    });
+
+    // Yön ve Getiri Ayarları için tik/çarpı seçimi
+    function yonGetiriSecimYap(el, olumlu) {
+        const hucre = el.parentElement;
+        const tumButonlar = hucre.querySelectorAll('.secim-btn');
+        tumButonlar.forEach(btn => {
+            btn.classList.remove('secilen');
+            btn.classList.remove('red-secilen');
+        });
+        if (olumlu) {
+            el.classList.add('secilen');
+        } else {
+            el.classList.add('red-secilen');
+        }
+    }
+</script>
+
+<style>
+    span.secim-btn, .secim-btn, .secim-btn:hover, td .secim-btn, .secim-hucre .secim-btn {
+      cursor: pointer !important;
+    }
+    .secim-btn {
+        cursor: pointer !important;
+        padding: 4px 8px;
+        margin: 0 4px;
+        display: inline-block;
+        font-size: 1.2em;
+        border-radius: 4px;
+        transition: background 0.2s, color 0.2s;
+    }
+    .secim-btn:first-child {
+        color: #43a047 !important; /* Tik: yeşil */
+    }
+    .secim-btn:last-child {
+        color: #e53935 !important; /* Çarpı: kırmızı */
+    }
+    .secim-btn.secilen {
+        background-color: #e6ffe6 !important;
+        color: #43a047 !important;
+        font-weight: bold;
+    }
+    .secim-btn.red-secilen {
+        background-color: #ffe6e6 !important;
+        color: #e53935 !important;
+        font-weight: bold;
+    }
+    .secim-btn:hover {
+        filter: brightness(1.15);
+    }
+    
+    /* Teknik Kartları için CSS */
+    .teknik-kartlar-flex-container {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 32px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .teknik-kart-block {
+      display: block;
+      background: #2c3e66;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      padding: 16px 12px;
+      text-align: center;
+      min-width: 140px;
+      min-height: 70px;
+      flex: 1 1 180px;
+      border: 1px solid #34495e;
+    }
+    .teknik-kart-title {
+      font-size: 0.95em;
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 8px;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .teknik-kart-value {
+      font-size: 1.25em;
+      color: #fff;
+      font-weight: bold;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+</style>
+
+
+

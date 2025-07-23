@@ -1,0 +1,72 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "layout.cshtml";
+}
+
+<div class="main-container">
+    <section class="firsatlar">
+        <h1 style="color: white !important;">@Model.Value("title")</h1>
+        <p>@Html.Raw(Model.Value("description"))</p>
+        <!-- Fırsatlar sayfasına özel içerikler buraya eklenebilir -->
+    </section>
+
+    <div class="accordion mt-4" id="manuelBistAccordion">
+        <div class="accordion-item shadow-sm rounded">
+            <div class="accordion-header-custom" data-bs-toggle="collapse" data-bs-target="#manuelBistCollapse" aria-expanded="true" aria-controls="manuelBistCollapse" style="text-align:center;">
+                Manuel Bist Emir
+            </div>
+            <div id="manuelBistCollapse" class="accordion-collapse collapse show" aria-labelledby="manuelBistHeading" data-bs-parent="#manuelBistAccordion">
+                <div class="accordion-body">
+                    <form>
+                        <div class="row mb-3 justify-content-center align-items-center">
+                            <div class="col-md-2 text-center">
+                                <label for="sembol" class="form-label fw-semibold">Sembol</label>
+                                <input type="text" id="sembol" class="form-control mx-auto" />
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <label for="yon" class="form-label fw-semibold">Yön</label>
+                                <input type="text" id="yon" value="AL" class="form-control mx-auto" />
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <label for="adet" class="form-label fw-semibold">Adet</label>
+                                <input type="number" id="adet" value="0" class="form-control mx-auto" />
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <label for="emirTipi" class="form-label fw-semibold">Emir Tipi</label>
+                                <input type="text" id="emirTipi" value="Limit" class="form-control mx-auto" />
+                            </div>
+                            <div class="col-md-2 text-center">
+                                <label for="fiyat" class="form-label fw-semibold">Fiyat</label>
+                                <input type="number" id="fiyat" value="0" class="form-control mx-auto" />
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="kucuk-kaydet-btn">İLET</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Mobilde daha akıcı scroll için */
+    margin-bottom: 1rem; /* Altına biraz boşluk bırakır, isteğe bağlı */
+}
+
+.firsatlar-table {
+    width: max-content;   /* Tablo içeriği kadar genişler */
+    min-width: 100%;      /* En az kapsayıcı kadar geniş olur */
+    border-collapse: collapse; /* Kenarlıklar birleşik görünür */
+}
+
+.firsatlar-table th, .firsatlar-table td {
+    white-space: nowrap;  /* Hücrelerdeki metin taşmaz, tablo genişler */
+    padding: 8px 12px;    /* Hücre içi boşluk */
+    text-align: center;   /* Ortala, isteğe bağlı */
+}
+

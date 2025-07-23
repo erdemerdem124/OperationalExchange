@@ -1,0 +1,1247 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+     
+@{
+    var panelHepAcik = Model.Value("panelHepAcik") is bool b && b;
+    var cardId = "card-" + Model.Id;
+    var isBedelsiz = (Model.Value("title") != null && Model.Value("title").ToString().Trim().ToLower() == "bedelsiz sermaye arttırımları");
+    var panelWidth = Model.Value("panelGenisliI");
+    if (string.IsNullOrEmpty(panelWidth?.ToString())) { panelWidth = "100%"; }
+    var panelHeight = Model.Value("panelYuksekligi");
+    var title = Model.Value("title")?.ToString().Trim().ToLower();
+}
+
+<div class="card-accordion" style="margin-bottom: 16px; width:@panelWidth; margin-left:auto; margin-right:auto;@(string.IsNullOrEmpty(panelHeight?.ToString()) ? "" : $" height:{panelHeight};")">
+    <div
+        @if (!panelHepAcik)
+        {
+            <text>onclick="toggleCard('@cardId')"</text>
+        }
+        class="card-header card-toggle @(panelHepAcik ? "open" : "")"
+        data-card-id="@cardId"
+        style="position: relative;">
+        <span class="title-text" style="flex:1; text-align:center;">@Model.Value("title")</span>
+        @if (!panelHepAcik)
+        {
+            <span class="card-arrow-absolute" id="arrow-@cardId">
+                <svg class="chevron-svg" width="24" height="24" viewBox="0 0 24 24">
+                    <polygon points="6,8 12,16 18,8" style="fill:black;" />
+                </svg>
+            </span>
+        }
+    </div>
+    <div id="@cardId" class="card-body" style="@(panelHepAcik ? "display:block;" : "display:none;")">
+        @if (isBedelsiz)
+        {
+            <div style="background:#2c3e66; padding-bottom:0px;">
+                <table style="width:100%; border-collapse:collapse;">
+                    <thead>
+                        <tr>
+                            <th style="background:#22325a; color:#fff; font-family:'Segoe UI',Arial,sans-serif; font-size:1.13em; text-align:center; font-weight:500; letter-spacing:1px; padding:10px 0; border:none;">Hisse</th>
+                            <th style="background:#22325a; color:#fff; font-family:'Segoe UI',Arial,sans-serif; font-size:1.13em; text-align:center; font-weight:500; letter-spacing:1px; padding:10px 0; border:none;">Lot</th>
+                            <th style="background:#22325a; color:#fff; font-family:'Segoe UI',Arial,sans-serif; font-size:1.13em; text-align:center; font-weight:500; letter-spacing:1px; padding:10px 0; border:none;">İşlem</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="background:#2c3e66; border:none; color:#fff; text-align:center;">EREGL</td>
+                            <td style="background:#2c3e66; border:none; color:#fff; text-align:center;">100</td>
+                            <td style="text-align:center; border:none;"><button type="button" class="kucuk-kaydet-btn">Edit</button> <button type="button" class="kucuk-sil-btn" style="background: #e53935; color: #fff; border: none; border-radius: 8px; padding: 0 16px; min-width: 80px; height: 32px; font-size: 0.93em; font-weight: 500; margin-left: 6px; cursor: pointer;">Sil</button></td>
+                        </tr>
+                        <!-- Tek inputlu ekle satırı -->
+                        <tr style="height:1px;">
+                            <td style="background:#2c3e66; border:none; padding-bottom:0;"><input type="text" placeholder="Hisse" class="bedelsiz-panel-input" style="width:90%; max-width:140px; padding:6px 8px; font-size:1em; text-align:center; outline:none; margin-bottom:0;" /></td>
+                            <td style="background:#2c3e66; border:none; padding-bottom:0;"><input type="number" placeholder="Lot" class="bedelsiz-panel-input" style="width:90%; max-width:140px; padding:6px 8px; font-size:1em; text-align:center; outline:none; margin-bottom:0;" /></td>
+                            <td style="text-align:center; border:none; padding-bottom:0;"><button type="button" class="ekle-btn">Ekle</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+        else if (title == "manuel emir")
+        {
+            <form id="manuelBistForm">
+                <div class="row mb-3 justify-content-center align-items-center" style="border-bottom:1px solid #e0e0e0; padding-bottom:16px;">
+                    <div class="col-md-2 text-center">
+                        <label class="form-label fw-semibold" style="font-size:0.65em;">Hisse</label>
+                        <input type="text" class="form-control mx-auto" />
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <label class="form-label fw-semibold" style="font-size:0.65em;">Yön</label>
+                        <select class="form-control mx-auto">
+                            <option>AL</option>
+                            <option>SAT</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <label class="form-label fw-semibold" style="font-size:0.65em;">Adet</label>
+                        <input type="number" class="form-control mx-auto" placeholder="0" />
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <label class="form-label fw-semibold" style="font-size:0.65em;">Emir Tipi</label>
+                        <select class="form-control mx-auto">
+                            <option>Limit</option>
+                            <option>Market</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <label class="form-label fw-semibold" style="font-size:0.65em;">Fiyat</label>
+                        <input type="number" class="form-control mx-auto" placeholder="0" />
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="kucuk-kaydet-btn"><b>İlet</b></button>
+                </div>
+            </form>
+        }
+        else
+        {
+            @Html.Raw(Model.Value("content"))
+                 @Html.Raw(Model.Value("content1"))
+            <script>
+            // Hepsini Seç butonuna her tıklamada: 1) tikler aktif, 2) çarpılar aktif, 3) hepsi pasif olacak şekilde script. Butonun ismi sabit kalacak.
+            document.addEventListener('DOMContentLoaded', function() {
+                var btn = document.getElementById('hepsiniSecBtn');
+                if(btn){
+                    let secili = 0; // 0: hepsi pasif, 1: tikler aktif, 2: çarpılar aktif
+                    btn.addEventListener('click', function() {
+                        secili = (secili + 1) % 3;
+                        document.querySelectorAll('#secim-tablo tr').forEach(function(tr) {
+                            var tik = tr.querySelector('.secim-tik');
+                            var carp = tr.querySelector('.secim-carp');
+                            if (tik && carp) {
+                                if (secili === 1) {
+                                    tik.classList.add('aktif');
+                                    carp.classList.remove('aktif');
+                                } else if (secili === 2) {
+                                    tik.classList.remove('aktif');
+                                    carp.classList.add('aktif');
+                                } else {
+                                    tik.classList.remove('aktif');
+                                    carp.classList.remove('aktif');
+                                }
+                            }
+                        });
+                        // Butonun ismi sabit kalacak, değiştirme
+                    });
+                    // Sayfa ilk yüklendiğinde hepsi pasif
+                    document.querySelectorAll('#secim-tablo tr').forEach(function(tr) {
+                        var tik = tr.querySelector('.secim-tik');
+                        var carp = tr.querySelector('.secim-carp');
+                        if (tik && carp) {
+                            tik.classList.remove('aktif');
+                            carp.classList.remove('aktif');
+                        }
+                    });
+                }
+            });
+            </script>
+            <style>
+            .secim-btn {
+              display: inline-block;
+              font-size: 2em;
+              margin: 2px 6px;
+              background: none;
+              color: #bdbdbd;
+              border: none;
+              box-shadow: none;
+              border-radius: 0;
+              transition: background 0.2s, color 0.2s;
+              cursor: pointer;
+              user-select: none;
+            }
+
+            .secim-tik {
+              color: #bdbdbd;
+            }
+            .secim-carp {
+              color: #bdbdbd;
+            }
+
+            .secim-tik.aktif {
+              background: #fff;
+              color: #2ecc40;
+              border-radius: 6px;
+              font-weight: bold;
+            }
+
+            .secim-carp.aktif {
+              background: #fff;
+              color: #e74c3c;
+              border-radius: 6px;
+              font-weight: bold;
+            }
+
+            /* Hover efekti */
+            .secim-btn:hover {
+              filter: brightness(0.97);
+              box-shadow: 0 4px 16px rgba(34, 51, 90, 0.13);
+              border-color: #1976d2;
+            }
+            </style>
+        }
+
+        @if (title == "hisse listesi")
+        {
+            <script>
+            (function(){
+              // Bu script'in bu panele özel çalışmasını ve tekrar tekrar çalışmasını önlüyoruz.
+              if (document.getElementById('hepsiniSecBtn-hisse-processed')) return;
+
+              // Tek bir satırda seçim yapma işlevi
+              function secimButonTiklaHisse(el) {
+                const hucre = el.parentElement;
+                if(!hucre) return;
+                const tik = hucre.querySelector('.secim-tik-hisse');
+                const carp = hucre.querySelector('.secim-carp-hisse');
+                if (!tik || !carp) return;
+                tik.classList.remove('aktif');
+                carp.classList.remove('aktif');
+                el.classList.add('aktif');
+              }
+
+              // Her bir tik ve çarpıya tıklama olayı atıyoruz.
+              document.querySelectorAll('#secim-tablo-hisse .secim-btn-hisse').forEach(function(btn){
+                btn.addEventListener('click', function(){ secimButonTiklaHisse(this); });
+              });
+
+              // Hepsini Seç butonu için 3 modlu durum (0: pasif, 1: tik, 2: çarpı)
+              let secimDurumuHisse = 0; 
+              const hepsiniSecBtn = document.getElementById('hepsiniSecBtn-hisse');
+
+              if(hepsiniSecBtn) {
+                  hepsiniSecBtn.addEventListener('click', function(){
+                    secimDurumuHisse = (secimDurumuHisse + 1) % 3; // Durumu 0, 1, 2 döngüsünde değiştir
+                    
+                    document.querySelectorAll('#secim-tablo-hisse tbody tr').forEach(function(row){
+                      const tik = row.querySelector('.secim-tik-hisse');
+                      const carp = row.querySelector('.secim-carp-hisse');
+                      
+                      if(tik && carp){
+                          // Önce her ikisini de pasif yap
+                          tik.classList.remove('aktif');
+                          carp.classList.remove('aktif');
+
+                          if(secimDurumuHisse === 1){ // Durum 1 ise sadece tikleri aktif et
+                            tik.classList.add('aktif');
+                          } else if(secimDurumuHisse === 2){ // Durum 2 ise sadece çarpıları aktif et
+                            carp.classList.add('aktif');
+                          }
+                          // Durum 0 ise ikisi de pasif kalır
+                      }
+                    });
+                  });
+                  // Scriptin birden fazla kez çalışmasını önlemek için ID'yi değiştiriyoruz.
+                  hepsiniSecBtn.id = 'hepsiniSecBtn-hisse-processed';
+              }
+            })();
+            </script>
+        }
+
+        @if (Model.Value("title")?.ToString().Trim().ToLower() == "günlük işlem dökümü")
+        {
+            <div style="display: flex; flex-direction: column; align-items: center; margin-top: 8px;">
+                <button id="excelAktarBtn" type="button" class="kucuk-kaydet-btn excel-green-btn">Excel'e Aktar</button>
+            </div>
+            <script>
+            document.getElementById('excelAktarBtn').addEventListener('click', function () {
+                var table = document.getElementById('kapanmis-bist-vadeli-islemler-table');
+                var html = table.outerHTML.replace(/ /g, '%20');
+                var filename = 'gunluk_islem_dokumu.xls';
+
+                var a = document.createElement('a');
+                a.href = 'data:application/vnd.ms-excel,' + html;
+                a.download = filename;
+                a.click();
+            });
+            </script>
+        }
+        @if (Model.Value("title")?.ToString().Trim().ToLower() == "temettü")
+        {
+            @Html.Raw(Model.Value("content"))
+            <!-- Kaydet butonu ve kapsayıcı div kaldırıldı -->
+        }
+        @if (title == "yön ve getiri ayarları")
+        {
+        <div style="width: 100%; display: flex; justify-content: center; margin-top: 18px;">
+            <button type="submit" class="kucuk-kaydet-btn" style="width: 110px; height: 32px; background: #1976d2 !important; color: #fff !important; font-size: 0.93em; font-weight: 500; border: none; border-radius: 8px; box-shadow: none; outline: none; display: inline-block; transition: background 0.2s;"><b>Kaydet</b></button>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function toggleCard(cardId) {
+        var panel = document.getElementById(cardId);
+        var header = document.querySelector('.card-header.card-toggle[data-card-id="' + cardId + '"]');
+        if (!panel || !header) return;
+
+        var isOpen = panel.style.display !== 'none';
+        panel.style.display = isOpen ? 'none' : 'block';
+
+        if (isOpen) {
+            header.classList.remove('open');
+        } else {
+            header.classList.add('open');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const headers = document.querySelectorAll('.card-header.card-toggle');
+        headers.forEach(function(header) {
+            const cardId = header.getAttribute('data-card-id');
+            const panel = document.getElementById(cardId);
+            if (!panel) return;
+            // Sadece panelHepAcik false ise aç/kapa class'ı uygula
+            var panelHepAcik = header.classList.contains('open');
+            if (!panelHepAcik) {
+                if (panel.style.display !== 'none') {
+                    header.classList.add('open');
+                } else {
+                    header.classList.remove('open');
+                }
+            }
+        });
+
+        // Bedelsiz formu
+        var bedelsizForm = document.getElementById('bedelsizForm');
+        if (bedelsizForm) {
+            bedelsizForm.onsubmit = function(e) {
+                e.preventDefault();
+                alert('Form verisi kaydedilecek (demo).');
+                return false;
+            };
+        }
+
+        // Manuel Bist Emir formu
+        var manuelBistForm = document.getElementById('manuelBistForm');
+        if (manuelBistForm) {
+            manuelBistForm.onsubmit = function(e) {
+                e.preventDefault();
+                alert('Form verisi kaydedilecek (demo).');
+                return false;
+            };
+        }
+
+        // Adet inputunda oklarla 100 artış/azalış
+        var adetInputs = document.querySelectorAll('#manuelBistForm input[type="number"]');
+        adetInputs.forEach(function(input) {
+            if (input.previousElementSibling && input.previousElementSibling.textContent && input.previousElementSibling.textContent.includes('Adet')) {
+                input.addEventListener('wheel', function(e) {
+                    e.preventDefault();
+                    var val = parseInt(input.value) || 0;
+                    if (e.deltaY < 0) {
+                        input.value = val + 100;
+                    } else {
+                        input.value = Math.max(0, val - 100);
+                    }
+                });
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        var val = parseInt(input.value) || 0;
+                        input.value = val + 100;
+                    } else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        var val = parseInt(input.value) || 0;
+                        input.value = Math.max(0, val - 100);
+                    }
+                });
+                input.addEventListener('input', function(e) {
+                    var val = parseInt(input.value) || 0;
+                    if (val < 0) input.value = 0;
+                });
+            }
+        });
+    });
+</script>
+<script>
+function formatInputPara(input) {
+    let val = input.value.replace(/\D/g, '');
+    if (val) {
+        input.value = Number(val).toLocaleString('tr-TR');
+    } else {
+        input.value = '';
+    }
+}
+function formatInputGetiri(input) {
+    let val = input.value.replace(/[^0-9,]/g, '');
+    val = val.replace(/(,.*),/g, '$1');
+    if (val) {
+        input.value = val + '%';
+        if (input.value.endsWith('%%')) {
+            input.value = input.value.slice(0, -1);
+        }
+    } else {
+        input.value = '';
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('input[name^="para_limit_"]').forEach(function(input) {
+        input.type = 'text';
+        input.oninput = function() { formatInputPara(this); };
+    });
+    document.querySelectorAll('input[name^="min_getiri_"]').forEach(function(input) {
+        input.type = 'text';
+        input.oninput = function() { formatInputGetiri(this); };
+    });
+    });
+</script>
+<style>
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    background: #2c3e66;
+    color: #fff;
+    font-size: 1.25rem;
+    font-weight: 500;
+    min-height: 48px;
+    border-radius: 4px 4px 0 0;
+    padding: 0 16px;
+}
+.card-header span.title-text {
+    flex: 1;
+    text-align: center;
+}
+.card-arrow-absolute {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 24px;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    /* Dönüş için ayrı class kullanılacak */
+}
+.chevron-svg {
+    display: block;
+    height: 24px;
+    width: 24px;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+    overflow: visible;
+}
+.card-header.open .card-arrow-absolute {
+    transform: translateY(-50%) rotate(180deg);
+}
+.kucuk-kaydet-btn, .kucuk-sil-btn {
+    min-width: 80px;
+    height: 32px;
+    font-size: 0.93em;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    box-shadow: none;
+    outline: none;
+    display: inline-block;
+    transition: background 0.2s, box-shadow 0.2s;
+    padding: 0 16px;
+    margin: 0 2px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+}
+.kucuk-kaydet-btn {
+    background: #1976d2 !important;
+    color: #fff !important;
+}
+.kucuk-kaydet-btn:hover {
+    background: #1565c0 !important;
+}
+.kucuk-sil-btn {
+    background: #e53935 !important;
+    color: #fff !important;
+}
+.kucuk-sil-btn:hover {
+    background: #b71c1c !important;
+}
+.robot-form-container {
+    max-width: 400px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 10px;
+    padding: 32px 24px 24px 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    font-size: 0.91em;
+}
+
+.robot-form-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.robot-form-container label {
+    font-weight: bold;
+    color: #22325a;
+    margin-bottom: 2px;
+    font-size: 0.93em;
+}
+
+.robot-form-container input[type="text"] {
+    padding: 5px 7px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    font-size: 0.92em;
+    margin-bottom: 7px;
+}
+
+.checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 7px;
+}
+
+.checkbox-row label {
+    font-weight: bold;
+    color: #22325a;
+    margin-bottom: 0;
+    font-size: 0.92em;
+}
+
+.robot-form-container input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    accent-color: #2250a0;
+}
+
+.robot-form-container button {
+    margin-top: 14px;
+    background: #2250a0;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 0;
+    font-size: 0.97em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.robot-form-container button:hover {
+    background: #1a3d7c;
+}
+
+.risk-panel-container {
+    max-width: 800px;
+    margin: 32px auto 0 auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    padding: 0 0 24px 0;
+    font-size: 0.93em;
+}
+
+.risk-panel-title {
+    background: #2250a0;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.08em;
+    text-align: center;
+    padding: 8px 0 8px 0;
+    border-radius: 10px 10px 0 0;
+    letter-spacing: 1px;
+}
+
+.risk-form {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    padding: 18px 18px 0 18px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative;
+}
+
+.risk-form-col {
+    flex: 1 1 0;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.risk-form-col label {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #22325a;
+    font-size: 0.91em;
+    margin-bottom: 1px;
+    gap: 6px;
+}
+
+.risk-form-col input[type="text"] {
+    flex: 1;
+    padding: 4px 6px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    font-size: 0.90em;
+    margin-left: 6px;
+}
+
+.risk-form-col input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    accent-color: #2250a0;
+    margin-left: 6px;
+}
+
+.risk-form-submit {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: -28px;
+    margin: 0 auto;
+    background: #2250a0;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 0;
+    font-size: 0.97em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: calc(100% - 36px);
+}
+
+.risk-form-submit:hover {
+    background: #1a3d7c;
+}
+/* Risk paneli için tüm font ve box-sizing ayarlarını sıfırla */
+.risk-panel-container, 
+.risk-panel-container * {
+    font-family: 'Segoe UI', Arial, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    box-sizing: border-box;
+    line-height: 1.3 !important;
+}
+
+.risk-panel-title {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px;
+}
+
+.risk-form-col {
+    min-width: 180px;
+    max-width: 220px;
+}
+
+.risk-form-col label {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    margin-bottom: 2px;
+    gap: 6px;
+}
+
+.risk-form-col input[type="text"] {
+    font-size: 14px !important;
+    padding: 4px 6px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    margin-left: 6px;
+    width: 100%;
+    max-width: 180px;
+}
+
+.risk-form-col input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    accent-color: #2250a0;
+    margin-left: 6px;
+}
+
+.risk-panel-outer-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+.risk-panel-container {
+    background: #22325a;
+    border-radius: 14px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+    padding: 0 40px 40px 40px;
+    max-width: 950px;
+    width: 100%;
+}
+
+.risk-panel-title {
+    background: #2250a0;
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.15em;
+    text-align: center;
+    padding: 14px 0 14px 0;
+    border-radius: 14px 14px 0 0;
+    letter-spacing: 1px;
+    margin-bottom: 0;
+}
+
+.risk-form {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    max-width: 100%;
+    margin: 0 auto 0 auto;
+    padding: 32px 0 0 0;
+    display: flex;
+    flex-direction: row;
+    gap: 80px; /* Sütunlar arası mesafe */
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.risk-form-col {
+    min-width: 220px;
+    max-width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    margin-bottom: 2px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.risk-form-col label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 2px;
+    margin-top: 8px;
+    gap: 0;
+    color: #fff;
+}
+
+.risk-form-col input[type="text"] {
+    display: block;
+    width: 100%;
+    max-width: 180px;
+    margin: 2px 0 0 0;
+    font-size: 14px;
+    padding: 4px 6px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    background: #fff;
+    color: #22325a;
+}
+
+.risk-form-col input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    accent-color: #2250a0;
+}
+
+.risk-form-submit {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -38px;
+    margin: 0 auto;
+    background: #2250a0;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 0;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 90%;
+    max-width: 400px;
+}
+
+.risk-form-submit:hover {
+    background: #1a3d7c;
+}
+
+.risk-form-submit-single {
+    margin-top: 14px;
+    background: #2250a0;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 0;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+    max-width: 180px;
+    display: block;
+}
+
+.risk-form-submit-single:hover {
+    background: #1a3d7c;
+}
+
+.teknik-kart {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  min-width: 220px;
+  min-height: 100px;
+  padding: 18px 20px;
+  box-shadow: 0 2px 8px rgba(34, 51, 90, 0.04);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.teknik-kart-title {
+  font-size: 1.08em;
+  font-weight: 500;
+  color: #22325a;
+  margin-bottom: 12px;
+}
+
+.teknik-kart-value {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #1976d2;
+}
+.ekle-btn {
+    background: linear-gradient(180deg, #43a047 0%, #388e3c 100%) !important;
+    color: #fff !important;
+    border: none;
+    border-radius: 10px;
+    padding: 3px 16px;
+    font-size: 0.95em;
+    font-weight: 500;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: inline-block;
+    min-width: 90px;
+    min-height: 32px;
+    box-sizing: border-box;
+}
+.ekle-btn:hover {
+    background: linear-gradient(180deg, #388e3c 0%, #43a047 100%) !important;
+}
+.bedelsiz-panel-input {
+    margin-bottom: 0 !important;
+}
+.bedelsiz-panel-input:hover, .bedelsiz-panel-input:focus {
+    border: 2px solid #43a047 !important;
+    background: #e8f5e9 !important;
+    color: #22325a !important;
+    outline: none !important;
+    transition: border 0.2s, background 0.2s;
+}
+td {
+    padding-bottom: 0 !important;
+}
+tr {
+    height: auto !important;
+}
+button.kucuk-kaydet-btn,
+.kucuk-kaydet-btn {
+    background: #1976d2 !important;
+    color: #fff !important;
+    font-size: 0.93em !important;
+    font-weight: 500 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    outline: none !important;
+    display: inline-block !important;
+    transition: background 0.2s !important;
+    padding: 0 !important;
+}
+button.kucuk-kaydet-btn:hover,
+.kucuk-kaydet-btn:hover {
+    background: #1565c0 !important;
+}
+.kucuk-kaydet-btn b {
+    font-size: 1.2em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+/* Daha küçük için */
+button.kucuk-kaydet-btn,
+.kucuk-kaydet-btn {
+    font-size: 14px !important; /* veya istediğin kadar küçük bir değer */
+}
+
+/* Sabit piksel değeriyle */
+button.kucuk-kaydet-btn,
+.kucuk-kaydet-btn {
+    font-size: 12px;
+}
+.excel-green-btn {
+    background: linear-gradient(180deg, #43a047 0%, #388e3c 100%) !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    font-weight: 600;
+    padding: 8px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    outline: none;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+.excel-green-btn:hover {
+    background: linear-gradient(180deg, #388e3c 0%, #43a047 100%) !important;
+}
+button.kucuk-kaydet-btn.excel-green-btn,
+.kucuk-kaydet-btn.excel-green-btn {
+    background: linear-gradient(180deg, #43a047 0%, #388e3c 100%) !important;
+    color: #fff !important;
+}
+button.kucuk-kaydet-btn.excel-green-btn:hover,
+.kucuk-kaydet-btn.excel-green-btn:hover {
+    background: linear-gradient(180deg, #388e3c 0%, #43a047 100%) !important;
+}
+</style>
+
+<style>
+.portfoy-saglama-table hr {
+    margin-top: 0;
+    margin-bottom: 0;
+    border: none;
+    border-top: 1.5px solid #888;
+}
+.portfoy-saglama-table td, .portfoy-saglama-table th {
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+</style>
+
+<style>
+form#manuelBistForm button.kucuk-kaydet-btn,
+#manuelBistForm .kucuk-kaydet-btn,
+button.kucuk-kaydet-btn {
+    font-size: 14px !important;
+}
+</style>
+
+<style>
+#secim-tablo {
+  font-size: 1.2em;
+}
+#secim-tablo th,
+#secim-tablo td {
+  font-size: 0.95em;
+}
+#secim-tablo th {
+  font-size: 1.02em;
+  font-weight: bold;
+}
+#secim-tablo strong {
+  font-size: 0.82em;
+}
+#secim-tablo .kucuk-kaydet-btn {
+  font-size: 0.82em !important;
+  width: 90px !important;
+  height: 28px !important;
+  padding: 0 10px !important;
+  border-radius: 6px !important;
+  box-sizing: border-box;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+#secim-tablo-hisse th, #secim-tablo-hisse td {
+  background: transparent;
+  color: #fff;
+  text-align: center;
+  padding: 8px 4px;
+  border: none;
+  font-size: 1.25em;
+}
+#secim-tablo-hisse .panel-btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.79em;
+  font-weight: 500;
+  cursor: pointer;
+  width: 82px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  transition: background 0.2s;
+}
+#secim-tablo-hisse .secim-btn-hisse {
+  cursor: pointer;
+  font-size: 1.3em;
+  margin: 0 4px;
+  border-radius: 6px;
+  padding: 2px 8px;
+  user-select: none;
+  background: transparent;
+  border: none;
+  font-weight: normal;
+  transition: background 0.2s, color 0.2s;
+  opacity: 0.7;
+}
+#secim-tablo-hisse .secim-btn-hisse.secim-tik-hisse {
+  color: #43d854 !important;
+  opacity: 1 !important;
+  background: transparent !important;
+}
+#secim-tablo-hisse .secim-btn-hisse.secim-carp-hisse {
+  color: #ff3b3b !important;
+  opacity: 1 !important;
+  background: transparent !important;
+}
+#secim-tablo-hisse .secim-btn-hisse.aktif.secim-tik-hisse {
+  color: #43d854 !important;
+  background: rgba(67, 216, 84, 0.13) !important;
+  font-weight: bold;
+}
+#secim-tablo-hisse .secim-btn-hisse.aktif.secim-carp-hisse {
+  color: #ff3b3b !important;
+  background: rgba(255, 59, 59, 0.13) !important;
+  font-weight: bold;
+}
+#secim-tablo-hisse .secim-btn-hisse:not(.aktif) {
+  color: #bdbdbd;
+  background: transparent;
+}
+</style>
+
+<style>
+.y-blue {
+    color: #1976d2 !important;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+.y-orange {
+    color: #ff9800 !important;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Edit butonları
+  document.querySelectorAll('.kucuk-kaydet-btn').forEach(function(btn) {
+    if (btn.textContent.trim() === 'Edit' && !btn.getAttribute('data-event-added')) {
+      btn.setAttribute('data-event-added', 'true');
+      btn.addEventListener('click', function() {
+        alert('Edit fonksiyonu çalışacak!');
+      });
+    }
+  });
+
+  // Sil butonları
+  document.querySelectorAll('.kucuk-sil-btn').forEach(function(btn) {
+    if (!btn.getAttribute('data-event-added')) {
+      btn.setAttribute('data-event-added', 'true');
+      btn.addEventListener('click', function() {
+        if (confirm('Bu satırı silmek istediğinize emin misiniz?')) {
+          btn.closest('tr').remove();
+        }
+      });
+    }
+  });
+
+  // Ekle butonları
+  document.querySelectorAll('.ekle-btn').forEach(function(btn) {
+    if (!btn.getAttribute('data-event-added')) {
+      btn.setAttribute('data-event-added', 'true');
+      btn.addEventListener('click', function() {
+        alert('Ekle fonksiyonu çalışacak!');
+      });
+    }
+  });
+});
+</script>
+
+<script>
+// Her satırda sadece bir buton aktif olabilir
+if (document.querySelectorAll('#secim-tablo tbody tr').length > 0) {
+  document.querySelectorAll('#secim-tablo tbody tr').forEach(function (tr) {
+    let tik = tr.querySelector('.secim-tik');
+    let carp = tr.querySelector('.secim-carp');
+    if (tik && carp) {
+      tik.addEventListener('click', function () {
+        tik.classList.add('aktif');
+        carp.classList.remove('aktif');
+      });
+      carp.addEventListener('click', function () {
+        carp.classList.add('aktif');
+        tik.classList.remove('aktif');
+      });
+    }
+  });
+}
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  let secimDurumu = 0; // 0: hepsi pasif, 1: yeşiller aktif, 2: kırmızılar aktif
+
+  // Satır içi seçim: Aynı anda sadece bir buton aktif olur
+  document.querySelectorAll('#secim-tablo tbody tr').forEach(function(row) {
+    row.querySelectorAll('.secim-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        row.querySelectorAll('.secim-btn').forEach(function(b) {
+          b.classList.remove('aktif');
+        });
+        btn.classList.add('aktif');
+      });
+    });
+  });
+
+  // Hepsini Seç butonu
+  var hepsiniSecBtn = document.getElementById('hepsiniSecBtn');
+  if (hepsiniSecBtn) {
+    hepsiniSecBtn.addEventListener('click', function() {
+      secimDurumu = (secimDurumu + 1) % 3;
+      document.querySelectorAll('#secim-tablo tbody tr').forEach(function(row) {
+        const tik = row.querySelector('.secim-tik');
+        const carp = row.querySelector('.secim-carp');
+        // Önce ikisinden de aktif class'ı kaldır
+        if (tik) tik.classList.remove('aktif');
+        if (carp) carp.classList.remove('aktif');
+        // Sonra sadece biri aktifleşsin
+        if (secimDurumu === 1 && tik) {
+          tik.classList.add('aktif');
+        } else if (secimDurumu === 2 && carp) {
+          carp.classList.add('aktif');
+        }
+        // secimDurumu 0 ise ikisi de pasif kalır
+      });
+    });
+  }
+
+  // Sayfa ilk açıldığında: ikisi de pasif
+  document.querySelectorAll('#secim-tablo tbody tr').forEach(function(row) {
+    row.querySelectorAll('.secim-btn').forEach(function(btn) {
+      btn.classList.remove('aktif');
+    });
+  });
+});
+</script>
+
+<style>
+/* Temettü paneli tablosu için: Sadece başlık ve veri hücreleri beyaz yazı */
+.temettu-paneli-table th,
+.temettu-paneli-table td {
+  color: #fff !important;
+}
+.temettu-paneli-table input,
+.temettu-paneli-table input:focus,
+.temettu-paneli-table input:hover {
+  background: #fff !important;
+  border-color: #bbb !important;
+  color: #000 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+</style>
+
+<style>
+.bedelsiz-panel-input,
+.bedelsiz-panel-input:focus,
+.bedelsiz-panel-input:hover {
+  background: #fff !important;
+  border-color: #bbb !important;
+  color: #000 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Teknik Kartları için CSS */
+.teknik-kartlar-flex-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 32px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.teknik-kart-block {
+  display: block;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(34, 51, 90, 0.10);
+  padding: 24px 18px;
+  text-align: center;
+  min-width: 160px;
+  min-height: 90px;
+  flex: 1 1 200px;
+}
+.teknik-kart-title {
+  font-size: 1.08em;
+  color: #22325a;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.teknik-kart-value {
+  font-size: 1.5em;
+  color: #1976d2;
+  font-weight: bold;
+}
+</style>
+
+<style>
+#unwind-firsatlar-Table th,
+#unwind-firsatlar-Table td {
+  font-size: 1.15em !important;
+}
+</style>
+
+@{
+    var kartlar = Model.Value<IEnumerable<Umbraco.Cms.Core.Models.Blocks.BlockListItem>>("teknikKartlar");
+    var sayfaBaslik = Model.Value("title")?.ToString().ToLower();
+}
+@if (sayfaBaslik == "teknik" && kartlar != null && kartlar.Any())
+{
+    <div class="teknik-kartlar-flex-container">
+        @foreach (var kart in kartlar)
+        {
+            var baslik = kart.Content.Value("baslik") ?? kart.Content.Value("title");
+            var deger = kart.Content.Value("deger") ?? kart.Content.Value("value");
+            <div class="teknik-kart-block">
+                <div class="teknik-kart-title">@baslik</div>
+                <div class="teknik-kart-value">@deger</div>
+            </div>
+        }
+    </div>
+}
+<script>
+document.querySelectorAll(".secim-hucre").forEach(function (hucre) {
+    const secimler = hucre.querySelectorAll(".secim-btn");
+    secimler.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            secimler.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+        });
+    });
+});
+</script>

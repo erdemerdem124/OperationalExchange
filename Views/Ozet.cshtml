@@ -1,0 +1,10 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "layout.cshtml";
+}
+
+<section class="ozet">
+    <h1>@Model.Value("title")</h1>
+    <p>@Html.Raw(Model.Value("description"))</p>
+    <!-- Özet sayfasına özel içerikler buraya eklenebilir -->
+</section> 
