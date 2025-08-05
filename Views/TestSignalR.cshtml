@@ -1,0 +1,263 @@
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+@{
+    Layout = "layout.cshtml";
+}
+
+<div class="container-fluid mt-4">
+    <h1 class="text-center mb-4">SignalR Gerçek Zamanlı Veri Test Sayfası</h1>
+    
+    <!-- Test Butonları -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Test Butonları</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-2 mb-2">
+                            <button class="btn btn-primary w-100" onclick="sendTestArbitrage()">
+                                Arbitraj Verisi
+                            </button>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <button class="btn btn-success w-100" onclick="sendTestBorsa()">
+                                Borsa Verisi
+                            </button>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <button class="btn btn-warning w-100" onclick="sendTestCrypto()">
+                                Kripto Verisi
+                            </button>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <button class="btn btn-info w-100" onclick="sendTestPriceUpdate()">
+                                Fiyat Güncelleme
+                            </button>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <button class="btn btn-secondary w-100" onclick="sendTestOpportunity()">
+                                Arbitraj Fırsatı
+                            </button>
+                        </div>
+                        <div class="col-md-2 mb-2">
+                            <button class="btn btn-dark w-100" onclick="sendInitialData()">
+                                Başlangıç Verileri
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Arbitraj Verileri -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Arbitraj Verileri</h5>
+                </div>
+                <div class="card-body">
+                    <div id="arbitrage-stats" class="mb-3"></div>
+                    <div id="arbitrage-table-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Borsa Verileri -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Borsa Verileri</h5>
+                </div>
+                <div class="card-body">
+                    <div id="borsa-stats" class="mb-3"></div>
+                    <div id="borsa-table-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kripto Verileri -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Kripto Para Verileri</h5>
+                </div>
+                <div class="card-body">
+                    <div id="crypto-stats" class="mb-3"></div>
+                    <div id="crypto-table-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Arbitraj Fırsatları -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Arbitraj Fırsatları</h5>
+                </div>
+                <div class="card-body">
+                    <div id="opportunity-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bağlantı Durumu -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>SignalR Bağlantı Durumu</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div id="connection-status" class="badge bg-secondary me-2">Bağlantı Kontrol Ediliyor...</div>
+                        <span id="connection-details" class="text-muted"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Test fonksiyonları
+async function sendTestArbitrage() {
+    try {
+        const response = await fetch('/api/testdata/send-arbitrage', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const result = await response.json();
+        console.log('Arbitraj test verisi gönderildi:', result);
+    } catch (error) {
+        console.error('Hata:', error);
+    }
+}
+
+async function sendTestBorsa() {
+    try {
+        const response = await fetch('/api/testdata/send-borsa', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const result = await response.json();
+        console.log('Borsa test verisi gönderildi:', result);
+    } catch (error) {
+        console.error('Hata:', error);
+    }
+}
+
+async function sendTestCrypto() {
+    try {
+        const response = await fetch('/api/testdata/send-crypto', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const result = await response.json();
+        console.log('Kripto test verisi gönderildi:', result);
+    } catch (error) {
+        console.error('Hata:', error);
+    }
+}
+
+async function sendTestPriceUpdate() {
+    try {
+        const priceData = {
+            symbol: 'BTC',
+            price: Math.random() * 1000 + 44000,
+            exchange: 'Binance'
+        };
+        
+        const response = await fetch('/api/testdata/send-price-update', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(priceData)
+        });
+        const result = await response.json();
+        console.log('Fiyat güncellemesi gönderildi:', result);
+    } catch (error) {
+        console.error('Hata:', error);
+    }
+}
+
+async function sendTestOpportunity() {
+    try {
+        const response = await fetch('/api/testdata/send-opportunity', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const result = await response.json();
+        console.log('Arbitraj fırsatı gönderildi:', result);
+    } catch (error) {
+        console.error('Hata:', error);
+    }
+}
+
+async function sendInitialData() {
+    try {
+        const response = await fetch('/api/testdata/send-initial-data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const result = await response.json();
+        console.log('Başlangıç verileri gönderildi:', result);
+    } catch (error) {
+        console.error('Hata:', error);
+    }
+}
+
+// Bağlantı durumunu güncelle
+function updateConnectionStatus() {
+    const statusElement = document.getElementById('connection-status');
+    const detailsElement = document.getElementById('connection-details');
+    
+    if (window.signalRManager) {
+        const isConnected = window.signalRManager.isConnected;
+        const state = window.signalRManager.getConnectionState();
+        
+        if (isConnected) {
+            statusElement.className = 'badge bg-success me-2';
+            statusElement.textContent = 'Bağlı';
+            detailsElement.textContent = `Durum: ${state}`;
+        } else {
+            statusElement.className = 'badge bg-danger me-2';
+            statusElement.textContent = 'Bağlantı Yok';
+            detailsElement.textContent = `Durum: ${state}`;
+        }
+    } else {
+        statusElement.className = 'badge bg-warning me-2';
+        statusElement.textContent = 'SignalR Yüklenmedi';
+        detailsElement.textContent = '';
+    }
+}
+
+// Sayfa yüklendiğinde bağlantı durumunu kontrol et
+document.addEventListener('DOMContentLoaded', function() {
+    // Her 2 saniyede bir bağlantı durumunu güncelle
+    setInterval(updateConnectionStatus, 2000);
+    
+    // İlk kontrol
+    updateConnectionStatus();
+});
+</script> 

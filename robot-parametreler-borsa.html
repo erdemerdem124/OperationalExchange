@@ -1,0 +1,211 @@
+<form>
+  <table id="robot-parametreler" style="width:100%; border-collapse:collapse; margin-bottom: 8px; table-layout: fixed; font-size: 0.9em !important;">
+    <tbody>
+      <tr>
+        <td style="text-align: right; width: 69%; font-size: 0.9em !important;"><label for="bistSerbestNakit" style="font-size: 0.9em !important;">BIST Serbest Nakit</label></td>
+        <td style="text-align: center; width: 77%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="sayiAzalt('bistSerbestNakit')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="bistSerbestNakit" name="bistSerbestNakit" value="100.000" style="width: 100px; text-align: center; font-size: 0.9em !important;" oninput="sayiYazarken(this)" onblur="sayiFormatla(this)" />
+            <button type="button" onclick="sayiArttir('bistSerbestNakit')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="viopSerbestNakit" style="font-size: 0.9em !important;">VİOP Serbest Nakit</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="sayiAzalt('viopSerbestNakit')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="viopSerbestNakit" name="viopSerbestNakit" value="100.000" style="width: 100px; text-align: center; font-size: 0.9em !important;" oninput="sayiYazarken(this)" onblur="sayiFormatla(this)" />
+            <button type="button" onclick="sayiArttir('viopSerbestNakit')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="maksPozisyonSayisi" style="font-size: 0.9em !important;">Maks. Pozisyon Sayısı</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="sayiAzalt('maksPozisyonSayisi')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="maksPozisyonSayisi" name="maksPozisyonSayisi" value="10" style="width: 100px; text-align: center; font-size: 0.9em !important;" oninput="sayiYazarken(this)" onblur="sayiFormatla(this)" />
+            <button type="button" onclick="sayiArttir('maksPozisyonSayisi')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="maksIslemHacmi" style="font-size: 0.9em !important;">Maks. İşlem Hacmi</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="sayiAzalt('maksIslemHacmi')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="maksIslemHacmi" name="maksIslemHacmi" value="50.000" style="width: 100px; text-align: center; font-size: 0.9em !important;" oninput="sayiYazarken(this)" onblur="sayiFormatla(this)" />
+            <button type="button" onclick="sayiArttir('maksIslemHacmi')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="dominasyonOrani" style="font-size: 0.9em !important;">Dominasyon Oranı</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="yuzdeAzalt('dominasyonOrani')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="dominasyonOrani" name="dominasyonOrani" value="10,00%" oninput="percentInputHandler(this)" style="width: 100px; text-align: center; font-size: 0.9em !important;" />
+            <button type="button" onclick="yuzdeArttir('dominasyonOrani')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+                    <tr><td colspan="5" style="border-top: 2px solid #000; padding:0;"></td></tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="dropSure" style="font-size: 0.9em !important;">Drop Süre</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="sayiAzalt('dropSure')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="dropSure" name="dropSure" value="60" style="width: 100px; text-align: center; font-size: 0.9em !important;" oninput="sayiYazarken(this)" onblur="sayiFormatla(this)" />
+            <button type="button" onclick="sayiArttir('dropSure')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="dropOran" style="font-size: 0.9em !important;">Drop Oran</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="yuzdeAzalt('dropOran')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="dropOran" name="dropOran" value="0,10%" oninput="percentInputHandler(this)" style="width: 100px; text-align: center; font-size: 0.9em !important;" />
+            <button type="button" onclick="yuzdeArttir('dropOran')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="crossCheckFrekansi" style="font-size: 0.9em !important;">CrossCheck Frekansı</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="sayiAzalt('crossCheckFrekansi')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="crossCheckFrekansi" name="crossCheckFrekansi" value="60" style="width: 100px; text-align: center; font-size: 0.9em !important;" oninput="sayiYazarken(this)" onblur="sayiFormatla(this)" />
+            <button type="button" onclick="sayiArttir('crossCheckFrekansi')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="crossCheckUyariLimiti" style="font-size: 0.9em !important;">CrossCheck Uyarı Limiti</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="sayiAzalt('crossCheckUyariLimiti')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="crossCheckUyariLimiti" name="crossCheckUyariLimiti" value="10.000" style="width: 100px; text-align: center; font-size: 0.9em !important;" oninput="sayiYazarken(this)" onblur="sayiFormatla(this)" />
+            <button type="button" onclick="sayiArttir('crossCheckUyariLimiti')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="crossCheckDurdurmaLimiti" style="font-size: 0.9em !important;">CrossCheck Durdurma Limiti</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="sayiAzalt('crossCheckDurdurmaLimiti')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="crossCheckDurdurmaLimiti" name="crossCheckDurdurmaLimiti" value="50.000" style="width: 100px; text-align: center; font-size: 0.9em !important;" oninput="sayiYazarken(this)" onblur="sayiFormatla(this)" />
+            <button type="button" onclick="sayiArttir('crossCheckDurdurmaLimiti')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="otomatikTemizlik" style="font-size: 0.9em !important;">Otomatik Temizlik</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;"><input type="checkbox" id="otomatikTemizlik" name="otomatikTemizlik" class="green-check" style="transform: scale(1.2);" /></td>
+      </tr>
+                    <tr><td colspan="5" style="border-top: 2px solid #000; padding:0;"></td></tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="teminatOrani" style="font-size: 0.9em !important;">Teminat Oranı</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="yuzdeAzalt('teminatOrani')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="teminatOrani" name="teminatOrani" value="10,00%" oninput="percentInputHandler(this)" style="width: 100px; text-align: center; font-size: 0.9em !important;" />
+            <button type="button" onclick="yuzdeArttir('teminatOrani')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="bistKomisyon" style="font-size: 0.9em !important;">BIST Komisyon</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="yuzdeAzalt('bistKomisyon')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="bistKomisyon" name="bistKomisyon" value="0,009%" oninput="percentInputHandler(this)" style="width: 100px; text-align: center; font-size: 0.9em !important;" />
+            <button type="button" onclick="yuzdeArttir('bistKomisyon')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="viopKomisyon" style="font-size: 0.9em !important;">VİOP Komisyon</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="yuzdeAzalt('viopKomisyon')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="viopKomisyon" name="viopKomisyon" value="0,009%" oninput="percentInputHandler(this)" style="width: 100px; text-align: center; font-size: 0.9em !important;" />
+            <button type="button" onclick="yuzdeArttir('viopKomisyon')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="nemaFaizi" style="font-size: 0.9em !important;">Nema Faizi</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="yuzdeAzalt('nemaFaizi')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="nemaFaizi" name="nemaFaizi" value="40,00%" oninput="percentInputHandler(this)" style="width: 100px; text-align: center; font-size: 0.9em !important;" />
+            <button type="button" onclick="yuzdeArttir('nemaFaizi')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="bistAcigaSatis" style="font-size: 0.9em !important;">BIST Açığa Satış</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;"><input type="checkbox" id="bistAcigaSatis" name="bistAcigaSatis" class="green-check" checked style="transform: scale(1.2);" /></td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="viopUzunPozisyon" style="font-size: 0.9em !important;">VİOP Uzun Pozisyon</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;"><input type="checkbox" id="viopUzunPozisyon" name="viopUzunPozisyon" class="green-check" checked style="transform: scale(1.2);" /></td>
+      </tr>
+                    <tr><td colspan="5" style="border-top: 2px solid #000; padding:0;"></td></tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="maxOrderBookTimeDifferenceMs" style="font-size: 0.9em !important;">MaxOrderBookTimeDifferenceMs</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="sayiAzalt('maxOrderBookTimeDifferenceMs')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="maxOrderBookTimeDifferenceMs" name="maxOrderBookTimeDifferenceMs" value="1" style="width: 100px; text-align: center; font-size: 0.9em !important;" oninput="sayiYazarken(this)" onblur="sayiFormatla(this)" />
+            <button type="button" onclick="sayiArttir('maxOrderBookTimeDifferenceMs')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="orderDelayMs" style="font-size: 0.9em !important;">OrderDelayMs</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="sayiAzalt('orderDelayMs')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="orderDelayMs" name="orderDelayMs" value="1" style="width: 100px; text-align: center; font-size: 0.9em !important;" oninput="sayiYazarken(this)" onblur="sayiFormatla(this)" />
+            <button type="button" onclick="sayiArttir('orderDelayMs')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="slippageProtection" style="font-size: 0.9em !important;">slippageProtection</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="sayiAzalt('slippageProtection')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="slippageProtection" name="slippageProtection" value="1" style="width: 100px; text-align: center; font-size: 0.9em !important;" oninput="sayiYazarken(this)" onblur="sayiFormatla(this)" />
+            <button type="button" onclick="sayiArttir('slippageProtection')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align: right; width: 70%; font-size: 0.9em !important;"><label for="orderTimeoutSec" style="font-size: 0.9em !important;">OrderTimeoutSec</label></td>
+        <td style="text-align: center; width: 30%; font-size: 0.9em !important;">
+          <div style="display: flex; align-items: center; gap: 5px; justify-content: center;">
+            <button type="button" onclick="sayiAzalt('orderTimeoutSec')" style="background: #ff4444; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">-</button>
+            <input type="text" id="orderTimeoutSec" name="orderTimeoutSec" value="1" style="width: 100px; text-align: center; font-size: 0.9em !important;" oninput="sayiYazarken(this)" onblur="sayiFormatla(this)" />
+            <button type="button" onclick="sayiArttir('orderTimeoutSec')" style="background: #44ff44; color: white; border: none; border-radius: 3px; width: 25px; height: 25px; font-size: 14px; cursor: pointer; margin: 2px 0;">+</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="padding: 8px 0;">
+          <div style="display: flex; justify-content: center;">
+            <button type="submit" class="kucuk-kaydet-btn" style="font-size: 16px;">Kaydet</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" style="height: 10px;"></td>
+      </tr>
+    </tbody>
+  </table>
+</form> 

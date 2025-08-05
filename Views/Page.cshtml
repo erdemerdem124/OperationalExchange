@@ -5,10 +5,10 @@
     Layout = "layout.cshtml";
 }
 
-<!-- Başlık -->
-@if (Model.Value("title") != null)
+<!-- Başlık - Sadece displayTitle alanı varsa göster -->
+@if (Model.Value("displayTitle") != null)
 {
-    <h1 style="color: #fff !important;">@Model.Value("title")</h1>
+    <h1 style="color: #fff !important;">@Model.Value("displayTitle")</h1>
 }
 
 <!-- Açıklama -->
@@ -67,6 +67,8 @@
     </div>
 }
 
+
+
 @foreach (var child in Model.Children)
 {
     @Html.Partial("Card", child)
@@ -87,8 +89,7 @@ function secimYap(el, olumlu) {
         }
     }
 
-document.addEventListener('DOMContentLoaded', function() {
-    var bedelsizForm = document.getElementById('bedelsizForm');
+            var bedelsizForm = document.getElementById('bedelsizForm');
         if (bedelsizForm) {
             bedelsizForm.addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -113,7 +114,7 @@ document.querySelectorAll('.secim-btn').forEach(function(el, i){
             el.classList.add('red-secilen');
         }
     });
-});
+    });
 
     // Yön ve Getiri Ayarları için tik/çarpı seçimi
     function yonGetiriSecimYap(el, olumlu) {
@@ -129,6 +130,55 @@ document.querySelectorAll('.secim-btn').forEach(function(el, i){
             el.classList.add('red-secilen');
         }
     }
+</script>
+
+<script>
+function formatCapital(input) {
+  let val = input.value.replace(/\D/g, '');
+  if(val === '') val = '0';
+  input.value = Number(val).toLocaleString('tr-TR');
+}
+function changeCapital(id, delta) {
+  const input = document.getElementById(id);
+  let val = input.value.replace(/\D/g, '');
+  if(val === '') val = '0';
+  let num = parseInt(val, 10) + delta;
+  if(num < 0) num = 0;
+  input.value = num.toLocaleString('tr-TR');
+}
+</script>
+
+<script>
+function percentInputHandler(input) {
+    // Sadece rakam, virgül ve nokta girilmesine izin ver, yüzdeyi sona ekle
+    let value = input.value.replace(/%/g, '').replace(/[^0-9.,]/g, '');
+    if (value.length > 0) {
+        input.value = value + '%';
+    } else {
+        input.value = '';
+    }
+    // İmleci yüzde işaretinden önce tut
+    if (input.value.endsWith('%')) {
+        input.setSelectionRange(input.value.length - 1, input.value.length - 1);
+    }
+}
+</script>
+
+<script>
+function formatGetiri(input) {
+    let value = input.value.replace(/[^0-9.,]/g, '').replace(',', '.');
+    var span = input.parentElement.querySelector('.getiri-formatted');
+    if (value === "") {
+        if(span) span.textContent = "";
+        return;
+    }
+    let num = parseFloat(value);
+    if (isNaN(num)) {
+        if(span) span.textContent = "";
+        return;
+    }
+    if(span) span.textContent = num.toLocaleString('tr-TR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "%";
+}
 </script>
 
 <style>
@@ -163,6 +213,7 @@ document.querySelectorAll('.secim-btn').forEach(function(el, i){
     .secim-btn:hover {
         filter: brightness(1.15);
     }
+    
     /* Teknik Kartları için CSS */
     .teknik-kartlar-flex-container {
       display: flex;
@@ -198,5 +249,29 @@ document.querySelectorAll('.secim-btn').forEach(function(el, i){
     }
 </style>
 
-
-
+<style>
+.capital-input-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.capital-arrows {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2px;
+  height: 32px;
+  justify-content: center;
+}
+.capital-arrows span {
+  cursor: pointer;
+  color: #256029;
+  font-size: 1.1em;
+  line-height: 1;
+  user-select: none;
+  padding: 0 4px;
+  transition: color 0.2s;
+}
+.capital-arrows span:hover {
+  color: #43d854;
+}
+</style>

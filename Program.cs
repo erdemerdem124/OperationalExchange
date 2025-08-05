@@ -1,4 +1,9 @@
+using Deneme1.Controllers;
+
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+// SignalR servisini ekle
+builder.Services.AddSignalR();
 
 builder.CreateUmbracoBuilder()
     .AddBackOffice()
@@ -21,6 +26,9 @@ app.UseUmbraco()
     {
         u.UseBackOfficeEndpoints();
         u.UseWebsiteEndpoints();
+        
+        // SignalR hub endpoint'ini ekle
+        u.EndpointRouteBuilder.MapHub<SignalRHub>("/signalrhub");
     });
 
 await app.RunAsync();

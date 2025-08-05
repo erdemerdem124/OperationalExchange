@@ -1,3 +1,44 @@
+:root {
+  --sidebar-bg: #1976d2;
+  --sidebar-hover: #1565c0;
+  --btn-primary: #1976d2;
+  --btn-primary-hover: #1565c0;
+  --content-bg: #17233a;
+}
+
+body.site-newsite {
+  --sidebar-bg: #256029;
+  --sidebar-hover: #388e3c;
+  --btn-primary: #388e3c;
+  --btn-primary-hover: #256029;
+  --content-bg: #b2d8b2;
+  --panel-header-bg: #81c784;
+  --panel-bg: #b2d8b2;
+}
+
+.modern-sidebar {
+  background: var(--sidebar-bg);
+}
+
+.modern-sidebar-content {
+  background: var(--content-bg);
+}
+
+.modern-sidebar li.active a,
+.modern-sidebar a:hover {
+  background: var(--sidebar-hover);
+}
+
+.btn, .btn-primary, .btn:active, .btn:focus {
+  background: var(--btn-primary);
+  border-color: var(--btn-primary);
+}
+
+.btn:hover, .btn-primary:hover {
+  background: var(--btn-primary-hover);
+  border-color: var(--btn-primary-hover);
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -15,7 +56,7 @@ html, body {
 
 .modern-sidebar {
     width: 150px;
-    background: #1976d2;
+    background: var(--sidebar-bg);
     color: #fff;
     min-height: 100vh;
     display: flex;
@@ -24,7 +65,7 @@ html, body {
     left: 0;
     top: 0;
     z-index: 100;
-    box-shadow: 2px 0 12px rgba(25, 118, 210, 0.08);
+    box-shadow: 2px 0 12px rgba(67, 216, 84, 0.08); /* yeşil için de uygun */
 }
 
 .sidebar-header {
@@ -79,7 +120,7 @@ html, body {
 
 .modern-sidebar li.active a,
 .modern-sidebar a:hover {
-    background: #1565c0;
+    background: var(--sidebar-hover);
     border-left: 4px solid #fff;
     color: #fff;
 }
@@ -710,14 +751,12 @@ h1, .main-title {
 
 /* Butonlar için gradient ve hover */
 .btn, .btn-primary, .btn:active, .btn:focus {
-    background: linear-gradient(90deg, #2d4373 0%, #22335a 100%) !important;
-    color: #fff !important;
-    border: none !important;
-    box-shadow: 0 2px 8px rgba(34, 51, 90, 0.10) !important;
+    background: var(--btn-primary);
+    border-color: var(--btn-primary);
 }
 .btn:hover, .btn-primary:hover {
-    background: linear-gradient(90deg, #22335a 0%, #2d4373 100%) !important;
-    color: #fff !important;
+    background: var(--btn-primary-hover);
+    border-color: var(--btn-primary-hover);
 }
 
 /* Kutuların köşeleri ve gölgeleri için sadeleştirme */
@@ -1256,54 +1295,569 @@ th, td {
     color: #007bff;
 }
 
-.card-header, .card-header.card-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    cursor: pointer;
-    background: #2c3e66;
-    color: #fff;
-    font-size: 1.25rem;
+button.kucuk-kaydet-btn,
+.kucuk-kaydet-btn {
+    background: #1976d2 !important;
+    color: #fff !important;
+    font-size: 14px !important;
     font-weight: 500;
-    min-height: 48px;
-    border-radius: 4px 4px 0 0;
-    padding: 0 16px;
-}
-.card-header.open .card-arrow {
-    transform: rotate(180deg) !important;
-}
-.card-arrow {
-    transition: transform 0.2s;
+    padding: 6px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    outline: none;
     display: inline-block;
+    box-shadow: none !important;
 }
-.custom-table th, .custom-table td {
+button.kucuk-kaydet-btn:hover,
+.kucuk-kaydet-btn:hover {
+    background: #1565c0 !important;
+}
+
+.bedelsiz-panel-input {
+    background: #fff !important;
+    color: #222 !important;
+    border: 1px solid #bbb !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* Çıkış Yap butonu için kırmızı stil - EN SONA EKLENDİ */
+button.kucuk-kaydet-btn.cikis-btn,
+.kucuk-kaydet-btn.cikis-btn {
+    background: linear-gradient(180deg, #e53935 0%, #b71c1c 100%) !important;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(229,57,53,0.12) !important;
+}
+button.kucuk-kaydet-btn.cikis-btn:hover,
+.kucuk-kaydet-btn.cikis-btn:hover {
+    background: linear-gradient(180deg, #b71c1c 0%, #e53935 100%) !important;
+}
+
+/* Seçim butonları için özel stil */
+.secim-btn {
+  font-size: 2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.secim-tik {
+  color: #2ecc40;
+}
+
+.secim-carp {
+  color: #e74c3c;
+}
+
+.secim-tik-hisse {
+  color: #43d854 !important;
+}
+.secim-carp-hisse {
+  color: #ff3b3b !important;
+}
+
+/* Yön Getiri Ayar Tablosu - Tik ve Çarpı Seçim Butonları */
+#yon-getiri-ayar-tablosu .secim-container {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+#yon-getiri-ayar-tablosu .secim-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.7rem;
+  background: transparent;
+  color: #888;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  margin: 0 2px;
+  outline: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+#yon-getiri-ayar-tablosu .secim-btn.tik {
+  color: #43d854;
+}
+#yon-getiri-ayar-tablosu .secim-btn.carp {
+  color: #ff3b3b;
+}
+
+#yon-getiri-ayar-tablosu .secim-btn.aktif.tik {
+  background: rgba(67, 216, 84, 0.18);
+  color: #43d854;
+  font-weight: bold;
+}
+#yon-getiri-ayar-tablosu .secim-btn.aktif.carp {
+  background: rgba(255, 59, 59, 0.18);
+  color: #ff3b3b;
+  font-weight: bold;
+}
+
+#yon-getiri-ayar-tablosu .secim-hucre {
+  text-align: center;
+  vertical-align: middle;
+  padding: 0;
+}
+
+#yon-getiri-ayar-tablosu .secim-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-size: 1.2rem;
+  border-radius: 6px;
+  margin: 0 2px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  user-select: none;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+#yon-getiri-ayar-tablosu .secim-btn.aktif {
+  font-weight: bold;
+}
+#yon-getiri-ayar-tablosu .secim-btn:not(.aktif).tik {
+  color: #43d854;
+  background: transparent;
+}
+#yon-getiri-ayar-tablosu .secim-btn:not(.aktif).carp {
+  color: #ff3b3b;
+  background: transparent;
+}
+
+#yon-getiri-ayar-tablosu .secim-btn.aktif.tik,
+#yon-getiri-ayar-tablosu .secim-btn.aktif.carp {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border-radius: 6px;
+}
+
+#secim-tablo-hisse {
+    background: #2d4373 !important; /* Panel ve veri satırları için */
+}
+
+#secim-tablo-hisse tbody tr {
+    background: #2d4373 !important; /* Veri satırları panelle aynı */
+}
+
+#secim-tablo-hisse thead tr {
+    background: #22335a !important; /* Sütun başlıkları için daha koyu */
+}
+
+#secim-tablo-hisse thead th {
+    color: #fff !important;
+    font-weight: bold;
+    font-size: 1.1em;
+    border-bottom: 2px solid #1a233a;
+    letter-spacing: 1px;
+    text-align: center;
+    padding: 10px 0;
+}
+
+#secim-tablo-hisse th {
+    background: #22335a !important;
+}
+
+#secim-tablo-hisse thead tr th {
+    background: #22335a !important;
+}
+
+#secim-tablo-hisse thead th {
+    background: #22335a !important;
+}
+
+#secim-tablo-hisse td {
+    background: transparent;
+}
+
+#secim-tablo-hisse thead th {
+    background: #22335a !important;
+}
+
+#secim-tablo-hisse tbody tr {
+    background: inherit;
+}
+
+#secim-tablo-hisse thead th {
+    background: #22335a !important;
     color: #fff !important;
 }
-.kucuk-kaydet-btn {
-    background: linear-gradient(180deg, #2c3e5c 0%, #22325a 100%);
+
+#secim-tablo-hisse thead th {
+    background: #22335a !important;
+    color: #fff !important;
+    border-bottom: none !important;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+}
+
+body.site-newsite .modern-sidebar-content {
+    background: var(--content-bg) !important;
+}
+
+body.site-newsite .modern-sidebar {
+    background: #1d4420 !important;
+}
+
+body.site-newsite .modern-sidebar-content {
+  background: #193619 !important;
+}
+
+body.site-newsite .panel,
+body.site-newsite .card,
+body.site-newsite .card-header,
+body.site-newsite .panel-header,
+body.site-newsite .card-body {
+    background: #2d7430 !important;
+}
+
+body.site-newsite .panel-header,
+body.site-newsite .card-header {
+  background: #2d7430 !important;
+  color: #1b4d3e !important;
+  font-weight: bold;
+}
+
+body.site-newsite .modern-sidebar li.active a,
+body.site-newsite .modern-sidebar a:hover {
+    background: #245c23 !important;
+    color: #fff !important;
+    border-left: 4px solid #fff !important;
+}
+
+body.site-newsite .modern-sidebar-content footer {
+    background: #193619 !important;
+}
+
+body.site-newsite .panel-header,
+body.site-newsite .card-header,
+body.site-newsite .card-header.card-toggle,
+body.site-newsite .card-header span.title-text,
+body.site-newsite .panel-header *,
+body.site-newsite .card-header *,
+body.site-newsite .card-header.card-toggle *,
+body.site-newsite .card-header span.title-text * {
+    color: #fff !important;
+}
+
+body.site-newsite table th {
+    background: #1a5b16 !important;
+}
+#kripto-coin-table th,
+#kripto-coin-table td {
+    font-size: 1.2em !important;
+}
+
+/* Menüde ikon ve yazıların tek satırda kalması için */
+.modern-sidebar ul li a {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+.modern-sidebar ul li a svg {
+    margin-right: 8px;
+    min-width: 20px;
+    min-height: 20px;
+}
+
+/* Yeşil arka plana uygun tablo renkleri */
+.y-white {
     color: #fff;
-    font-size: 0.95em;
-    font-weight: 500;
-    padding: 3px 16px;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: background 0.2s, box-shadow 0.2s;
-    margin-bottom: 6px;
+    font-weight: bold;
 }
-.kucuk-kaydet-btn:hover {
-    background: linear-gradient(180deg, #22325a 0%, #2c3e5c 100%);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+.y-blue {
+    color: #4fc3f7;
+    font-weight: bold;
 }
-.secim-btn {
+.y-black {
+    color: #111;
+    font-weight: bold;
+}
+.y-red {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+/* Tablo için ek renkler */
+.y-yellow {
+    color: #ffe066;
+    font-weight: bold;
+}
+.y-purple {
+    color: #a259e6;
+    font-weight: bold;
+}
+.y-black {
+    color: #111;
+    font-weight: bold;
+}
+.y-brown {
+    color: #a0522d;
+    font-weight: bold;
+}
+
+.green-check {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 20px !important;
+  height: 20px !important;
+  border: 2px solid #43d854 !important;
+  border-radius: 4px !important;
+  background: #fff !important;
+  position: relative !important;
+  cursor: pointer !important;
+  vertical-align: middle !important;
+  transition: border-color 0.2s !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: inline-block !important;
+}
+.green-check:checked {
+  background: #43d854 !important;
+  border-color: #43d854 !important;
+}
+.green-check:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 6px;
+  height: 12px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+  display: block;
+}
+
+.green-check:checked {
+  accent-color: #00c853;
+}
+#robot-parametreler td {
+  padding: 0 0 !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+  font-size: 1.1em !important;
+}
+#robot-parametreler label {
+  margin-right: 1px !important;
+  color: #fff;
+  text-align: center;
+  display: block;
+  font-size: 1.1em !important;
+}
+/* CSS specificity sorununu çözmek için daha spesifik kurallar */
+table#robot-parametreler {
+  font-size: 1.1em !important;
+}
+table#robot-parametreler td {
+  font-size: 1.1em !important;
+}
+table#robot-parametreler label {
+  font-size: 1.1em !important;
+}
+/* Genel tablo kurallarını robot parametreleri için devre dışı bırak */
+.umb-table#robot-parametreler,
+.rte table#robot-parametreler,
+.accordion-body table#robot-parametreler,
+.main-container table#robot-parametreler,
+.container table#robot-parametreler,
+table#robot-parametreler {
+  font-size: 1.1em !important;
+}
+.umb-table th#robot-parametreler td,
+.rte table th#robot-parametreler td,
+.accordion-body table th#robot-parametreler td,
+.main-container table th#robot-parametreler td,
+.container table th#robot-parametreler td,
+.umb-table td#robot-parametreler td,
+.rte table td#robot-parametreler td,
+.accordion-body table td#robot-parametreler td,
+.main-container table td#robot-parametreler td,
+.container table td#robot-parametreler td,
+table#robot-parametreler td {
+  font-size: 1.1em !important;
+}
+#robot-parametreler input[type="text"],
+#robot-parametreler input[type="number"] {
+  width: 110px;
+  height: 24px;
+  font-size: 0.95em;
+  padding: 1px 4px;
+  box-sizing: border-box;
+  margin-left: 0;
+  display: inline-block;
+  text-align: center;
+}
+#robot-parametreler input[type="checkbox"].green-check:checked {
+  accent-color: #00c853;
+}
+#robot-parametreler button.kucuk-kaydet-btn {
+  min-width: 70px;
+  height: 28px;
+  font-size: 0.95em;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+#robot-parametreler button.kucuk-kaydet-btn:hover {
+  background: #1565c0;
+}
+
+/* Robot parametreleri için en yüksek specificity ile font boyutu */
+html body table#robot-parametreler,
+html body table#robot-parametreler td,
+html body table#robot-parametreler label {
+  font-size: 1.1em !important;
+}
+
+/* Fiyat güncelleme animasyonları */
+.price-up {
+    animation: priceUp 1s ease-in-out;
+    background-color: rgba(40, 167, 69, 0.1) !important;
+}
+
+.price-down {
+    animation: priceDown 1s ease-in-out;
+    background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+@keyframes priceUp {
+    0% {
+        background-color: rgba(40, 167, 69, 0.3);
+        transform: scale(1);
+    }
+    50% {
+        background-color: rgba(40, 167, 69, 0.5);
+        transform: scale(1.05);
+    }
+    100% {
+        background-color: rgba(40, 167, 69, 0.1);
+        transform: scale(1);
+    }
+}
+
+@keyframes priceDown {
+    0% {
+        background-color: rgba(220, 53, 69, 0.3);
+        transform: scale(1);
+    }
+    50% {
+        background-color: rgba(220, 53, 69, 0.5);
+        transform: scale(1.05);
+    }
+    100% {
+        background-color: rgba(220, 53, 69, 0.1);
+        transform: scale(1);
+    }
+}
+
+/* Toast container stilleri */
+.toast-container {
+    z-index: 9999;
+}
+
+/* Loading spinner */
+.loading-spinner {
     display: inline-block;
-    font-size: 1.2em;
-    border-radius: 4px;
-    transition: background 0.2s, color 0.2s;
-    cursor: pointer;
-    padding: 4px 8px;
-    margin: 0 4px;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Tablo satır hover efekti */
+.table tbody tr:hover {
+    background-color: rgba(0,0,0,.075);
+    transition: background-color 0.2s ease;
+}
+
+/* Badge animasyonları */
+.badge {
+    transition: all 0.3s ease;
+}
+
+.badge:hover {
+    transform: scale(1.1);
+}
+
+/* Modal animasyonları */
+.modal.fade .modal-dialog {
+    transition: transform 0.3s ease-out;
+    transform: translate(0, -50px);
+}
+
+.modal.show .modal-dialog {
+    transform: none;
+}
+
+/* Card hover efektleri */
+.card {
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,.125);
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Button hover efektleri */
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive tablo */
+@media (max-width: 768px) {
+    .table-responsive {
+        font-size: 0.875rem;
+    }
+    
+    .table-responsive th,
+    .table-responsive td {
+        padding: 0.5rem 0.25rem;
+    }
+}
+
+/* Dark mode desteği */
+@media (prefers-color-scheme: dark) {
+    .price-up {
+        background-color: rgba(40, 167, 69, 0.2) !important;
+    }
+    
+    .price-down {
+        background-color: rgba(220, 53, 69, 0.2) !important;
+    }
+    
+    .table tbody tr:hover {
+        background-color: rgba(255,255,255,.075);
+    }
 }

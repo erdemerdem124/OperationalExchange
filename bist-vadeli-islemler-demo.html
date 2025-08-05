@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIST Vadeli İşlemler Özeti - Demo</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        
+        .card {
+            background-color: #2d2d2d;
+            border: 1px solid #404040;
+        }
+        
+        .card-header {
+            background-color: #404040;
+            border-bottom: 1px solid #505050;
+        }
+        
+        .card-footer {
+            background-color: #404040;
+            border-top: 1px solid #505050;
+        }
+        
+        .table {
+            color: #ffffff;
+        }
+        
+        .table th {
+            background-color: #404040;
+            border-color: #505050;
+        }
+        
+        .table td {
+            border-color: #505050;
+        }
+        
+        /* Exchange colors */
+        .y-brown { color: #d4a574; }
+        .y-black { color: #000000; }
+        .y-yellow { color: #ffd700; }
+        .y-red { color: #ff6b6b; }
+        .y-purple { color: #a855f7; }
+        .y-orange { color: #ffa500; }
+        .y-blue { color: #3b82f6; }
+        
+        /* Responsive table */
+        .kripto-responsive-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .kripto-responsive-table th,
+        .kripto-responsive-table td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #505050;
+        }
+        
+        .kripto-responsive-table th {
+            background-color: #404040;
+            font-weight: bold;
+        }
+        
+        .kripto-responsive-table p {
+            margin: 0;
+        }
+        
+        /* Loading animation */
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+        }
+        
+        /* Button styles */
+        .btn-outline-secondary {
+            color: #ffffff;
+            border-color: #6c757d;
+        }
+        
+        .btn-outline-secondary:hover {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mb-4">
+                    <i class="fas fa-chart-line me-2"></i>
+                    BIST Vadeli İşlemler Özeti - Demo
+                </h1>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="mb-0">BIST Vadeli İşlemler Tablosu</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="kripto-0-ozet-bist-vadeli-islemler-table"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="mb-0">İstatistikler</h6>
+                    </div>
+                    <div class="card-body">
+                        <div id="bist-vadeli-islemler-stats"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="mb-0">Kontroller</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <button class="btn btn-primary w-100 mb-2" onclick="loadSampleData()">
+                                    <i class="fas fa-database me-2"></i>
+                                    Örnek Veri Yükle
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-success w-100 mb-2" onclick="addRandomItem()">
+                                    <i class="fas fa-plus me-2"></i>
+                                    Rastgele Veri Ekle
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-warning w-100 mb-2" onclick="clearData()">
+                                    <i class="fas fa-trash me-2"></i>
+                                    Verileri Temizle
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-info w-100 mb-2" onclick="showStatistics()">
+                                    <i class="fas fa-chart-bar me-2"></i>
+                                    İstatistikleri Göster
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- BIST Spot Futures Arbitrage Scripts -->
+    <script type="module">
+        import { handleBistSpotFuturesArbitrageData, getSampleBistSpotFuturesArbitrageData } from './wwwroot/js/dto.js/bistSpotFuturesArbitrage.js';
+        
+        // Global data
+        window.bistData = [];
+        
+        // Global functions for demo
+        window.loadSampleData = function() {
+            window.bistData = getSampleBistSpotFuturesArbitrageData();
+            handleBistSpotFuturesArbitrageData(window.bistData);
+            console.log('Örnek veri yüklendi:', window.bistData);
+        };
+        
+        window.addRandomItem = function() {
+            const exchanges = ['Bitci', 'Paribu', 'Bitexen', 'BtcTürk', 'Icrypex'];
+            const directions = ['TRY Trio', 'USDT Trio'];
+            
+            const randomItem = {
+                id: Date.now(),
+                exchange: exchanges[Math.floor(Math.random() * exchanges.length)],
+                direction: directions[Math.floor(Math.random() * directions.length)],
+                volume: Math.floor(Math.random() * 10000) + 1000,
+                grossProfit: Math.random() * 500,
+                netProfit: Math.random() * 400,
+                grossProfitMargin: Math.random() * 3,
+                netProfitMargin: Math.random() * 2.5,
+                dateAdded: new Date()
+            };
+            
+            window.bistData.push(randomItem);
+            handleBistSpotFuturesArbitrageData(window.bistData);
+            console.log('Rastgele veri eklendi:', randomItem);
+        };
+        
+        window.clearData = function() {
+            window.bistData = [];
+            handleBistSpotFuturesArbitrageData(window.bistData);
+            console.log('Veriler temizlendi');
+        };
+        
+        window.showStatistics = function() {
+            if (window.bistData.length === 0) {
+                alert('Gösterilecek veri bulunamadı');
+                return;
+            }
+            
+            const totalVolume = window.bistData.reduce((sum, item) => sum + item.volume, 0);
+            const totalGrossProfit = window.bistData.reduce((sum, item) => sum + item.grossProfit, 0);
+            const totalNetProfit = window.bistData.reduce((sum, item) => sum + item.netProfit, 0);
+            const profitableCount = window.bistData.filter(item => item.grossProfit > 0).length;
+            
+            alert(`
+İstatistikler:
+- Toplam Hacim: ${totalVolume.toLocaleString('tr-TR')}
+- Toplam Brüt Kar: ${totalGrossProfit.toFixed(2).replace('.', ',')} TRY
+- Toplam Net Kar: ${totalNetProfit.toFixed(2).replace('.', ',')} TRY
+- Karlı İşlem Sayısı: ${profitableCount}/${window.bistData.length}
+- Başarı Oranı: %${((profitableCount / window.bistData.length) * 100).toFixed(1).replace('.', ',')}
+            `);
+        };
+        
+        // Load sample data on page load
+        setTimeout(() => {
+            window.loadSampleData();
+        }, 1000);
+    </script>
+</body>
+</html> 

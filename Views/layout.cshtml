@@ -4,6 +4,9 @@
     var menuItems = root.Children().Where(x => x.IsVisible());
     var metaTitle = Model.HasValue("metaTitle") ? Model.Value("metaTitle") : null;
     var metaDescription = Model.HasValue("metaDescription") ? Model.Value("metaDescription") : null;
+    var newSiteRoot = Model.AncestorOrSelf("newWebSiteRoot");
+    var isNewSite = root.ContentType.Alias == "newWebSiteRoot";
+    var siteClass = root.ContentType.Alias == "newWebSiteRoot" ? "site-newsite" : "site-default";
 }
 <!DOCTYPE html>
 <html lang="tr">
@@ -31,15 +34,15 @@
     <meta property="og:description" content="@metaDescription" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
-<body>
+<body class="@siteClass">
     <div class="modern-sidebar-layout">
         <nav class="modern-sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="sidebar-fixed-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#90caf9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="23 4 23 10 17 10"></polyline>
-                        <polyline points="1 20 1 14 7 14"></polyline>
-                        <path d="M3.51 9a9 9 0 0 1 14.13-3.36L23 10M1 14l5.36 5.36A9 9 0 0 0 20.49 15"></path>
+                    <!-- Tam yuvarlak zemin içinde beyaz tik ikonu -->
+                    <svg width="24" height="24" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="12" fill="#43d854"/>
+                        <polyline points="17 8 11 16 7 12" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
                 <button class="sidebar-toggle-new" id="newSidebarToggle" aria-label="Menüyü Aç/Kapat">
@@ -50,6 +53,12 @@
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
                 </button>
+            </div>
+            <!-- Logo görseli, sidebar-header'ın ALTINA ve menüye uyumlu şekilde -->
+            <div style="display: flex; justify-content: center; align-items: center; margin: 24px 0 8px 0; width: 100%;">
+                <a href="https://finrix.io" target="_blank" style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                    <img src="/media/Ekran%20g%C3%B6r%C3%BCnt%C3%BCs%C3%BC%202025-07-16%20223529.png" alt="Finrix Logo" style="max-width: 48px; max-height: 48px; border-radius: 50%; background: #fff; display: block; margin: 0 auto;" />
+                </a>
             </div>
             <ul>
                 <li class="@(Model.Id == root.Id ? "active" : "")">
@@ -67,40 +76,34 @@
                 {
                     <li class="@(Model.Id == item.Id ? "active" : "")">
                         <a href="@item.Url()">
-                            @if (item.Name == "İşlemler")
-                            {
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-                                </svg>
+                            @{
+                                string iconSvg = @"<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='3' width='7' height='7'></rect><rect x='14' y='3' width='7' height='7'></rect><rect x='14' y='14' width='7' height='7'></rect><rect x='3' y='14' width='7' height='7'></rect></svg>"; // Varsayılan ikon
+                                switch (item.Name)
+                                {
+                                    case "K İşlemler":
+                                    case "İşlemler":
+                                        iconSvg = "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='22 12 18 12 15 21 9 3 6 12 2 12'></polyline></svg>";
+                                        break;
+                                    case "K Portföy":
+                                    case "Portföy":
+                                        iconSvg = "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M18 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4'></path><path d='M22 6h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4V6z'></path></svg>";
+                                        break;
+                                    case "K Özet":
+                                    case "Özet":
+                                        iconSvg = "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M21 12A9 9 0 1 1 12 3v9z'></path><path d='M12 3a9 9 0 0 1 9 9h-9z'></path></svg>";
+                                        break;
+                                    case "K Fırsatlar":
+                                    case "Fırsatlar":
+                                        iconSvg = "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-trending-up'><polyline points='23 6 13.5 15.5 8.5 10.5 1 18'></polyline><polyline points='17 6 23 6 23 12'></polyline></svg>";
+                                        break;
+                                    case "K Teknik":
+                                    case "Teknik":
+                                        iconSvg = "<svg width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='#fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='7' y='7' width='10' height='10' rx='2'></rect><path d='M4 4v3M4 17v3M20 4v3M20 17v3M4 4h3M17 4h3M4 20h3M17 20h3'/></svg>";
+                                        break;
+                                }
                             }
-                            @if (item.Name == "Portföy")
-                            {
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 20H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"></path>
-                                    <path d="M22 6h-4a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h4V6z"></path>
-                                </svg>
-                            }
-                            @if (item.Name == "Özet")
-                            {
-                                <!-- Pie chart (pasta grafik, finansal özet) ikon -->
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <path d="M21 12A9 9 0 1 1 12 3v9z"></path>
-                                  <path d="M12 3a9 9 0 0 1 9 9h-9z"></path>
-                                </svg>
-                            }
-                            @if (item.Name == "Fırsatlar")
-                            {
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trending-up"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                            }
-                            @if (item.Name == "Teknik")
-                            {
-                                <!-- Chip/settings (teknik/finansal teknoloji) ikon -->
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <rect x="7" y="7" width="10" height="10" rx="2"></rect>
-                                  <path d="M4 4v3M4 17v3M20 4v3M20 17v3M4 4h3M17 4h3M4 20h3M17 20h3"/>
-                                </svg>
-                            }
-                            @item.Name
+                            @Html.Raw(iconSvg)
+                            @(item.HasValue("title") ? item.Value("title") : item.Name)
                         </a>
                     </li>
                 }
@@ -108,11 +111,29 @@
         </nav>
         <div class="modern-sidebar-content" id="sidebarContent">
             @RenderBody()
-            <footer>
-                <p>&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</p>
+            <footer style="margin-bottom:0 !important; padding-bottom:0 !important;">
+                <p style="margin-bottom:0; padding-bottom:0;">&copy; @DateTime.Now.Year - Tüm hakları saklıdır.</p>
             </footer>
         </div>
     </div>
+    <!-- SignalR Client Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.0/signalr.min.js"></script>
+    
+    <!-- SignalR Common Manager -->
+    <script src="/js/signalr-common.js"></script>
+    
+    <!-- Ana Uygulama (ES6 Modül) -->
+    <script type="module" src="/js/app.js"></script>
+    
+    <!-- Arbitrage Data Manager -->
+    <script src="/js/arbitrage-data.js"></script>
+    
+    <!-- Borsa Data Manager -->
+    <script src="/js/borsa-data.js"></script>
+    
+    <!-- Crypto Data Manager -->
+    <script src="/js/crypto-data.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const sidebar = document.getElementById('sidebar');
@@ -122,6 +143,388 @@
             sidebar.classList.toggle('closed');
             sidebarContent.classList.toggle('expanded');
         });
+    </script>
+
+    <!-- Dinamik Tarih Başlıkları için JavaScript -->
+    <script>
+        // Sayfa yüklendiğinde dinamik tarih başlıklarını ayarla
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hangi proje olduğunu kontrol et (Kripto mu Borsa mı)
+            var isKriptoProject = @(isNewSite ? "true" : "false");
+            console.log('isNewSite değeri:', @(isNewSite ? "true" : "false"));
+            console.log('Root content type:', '@root.ContentType.Alias');
+            console.log('Model content type:', '@Model.ContentType.Alias');
+            console.log('Proje türü:', isKriptoProject ? 'Kripto' : 'Borsa');
+            
+            // Özet sayfasındaki kartları bul
+            var cardHeaders = document.querySelectorAll('.card-header .title-text');
+            console.log('Bulunan kart sayısı:', cardHeaders.length);
+            
+            cardHeaders.forEach(function(header, index) {
+                var originalText = header.textContent.trim();
+                var originalTitle = header.getAttribute('data-original-title');
+                console.log('Kart', index, 'Orijinal:', originalText, 'Data:', originalTitle);
+                
+                // Eğer başlık tarih formatında ise (Bugün, Dün, vs.) dinamik olarak hesapla
+                if (isDateTitle(originalText) || isDateTitle(originalTitle)) {
+                    var dynamicTitle = calculateDateTitle(index, isKriptoProject);
+                    console.log('Dinamik başlık:', dynamicTitle);
+                    header.textContent = dynamicTitle;
+                }
+            });
+            
+            // Panel isimlerini de dinamik olarak güncelle
+            updatePanelTitles(isKriptoProject);
+        });
+
+        // Başlığın tarih formatında olup olmadığını kontrol et
+        function isDateTitle(text) {
+            if (!text) return false;
+            
+            console.log('isDateTitle kontrol ediliyor:', text);
+            
+            var dateKeywords = ['bugün', 'dün', 'önceki gün', 'geçen hafta', 'geçen ay', 'gün önce', 'iş günü önce', 'önce'];
+            var hasDateKeywords = dateKeywords.some(keyword => text.toLowerCase().includes(keyword));
+            
+            // DD-MM-YYYY formatındaki tarihleri de kontrol et
+            var datePattern = /^\d{2}-\d{2}-\d{4}$/;
+            var isDatePattern = datePattern.test(text.trim());
+            
+            console.log('isDateTitle sonucu:', hasDateKeywords || isDatePattern, 'hasDateKeywords:', hasDateKeywords, 'isDatePattern:', isDatePattern);
+            
+            return hasDateKeywords || isDatePattern;
+        }
+
+        // Dinamik tarih başlığını hesapla
+        function calculateDateTitle(index, isKriptoProject) {
+            var today = new Date();
+            var targetDate;
+            
+            if (isKriptoProject) {
+                // Kripto projesi: Normal günlere göre
+                targetDate = new Date(today);
+                targetDate.setDate(today.getDate() - index);
+            } else {
+                // Borsa projesi: İş günlerine göre
+                targetDate = getPreviousBusinessDay(today, index);
+            }
+            
+            return formatDateTitle(targetDate, index);
+        }
+
+        // İş günü hesaplama (Borsa projesi için)
+        function getPreviousBusinessDay(startDate, daysBack) {
+            var currentDate = new Date(startDate);
+            var businessDaysCounted = 0;
+            
+            console.log('getPreviousBusinessDay başlangıç:', startDate.toDateString(), 'daysBack:', daysBack);
+            
+            while (businessDaysCounted < daysBack) {
+                currentDate.setDate(currentDate.getDate() - 1);
+                var dayOfWeek = currentDate.getDay();
+                var dayName = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'][dayOfWeek];
+                
+                console.log('Kontrol edilen tarih:', currentDate.toDateString(), 'Gün:', dayName, 'İş günü mü:', (dayOfWeek !== 0 && dayOfWeek !== 6));
+                
+                // Hafta sonu değilse iş günü say
+                if (dayOfWeek !== 0 && dayOfWeek !== 6) { // 0=Pazar, 6=Cumartesi
+                    businessDaysCounted++;
+                    console.log('İş günü sayıldı, toplam:', businessDaysCounted);
+                }
+            }
+            
+            console.log('Sonuç tarih:', currentDate.toDateString());
+            return currentDate;
+        }
+
+        // Tarih başlığını formatla
+        function formatDateTitle(date, index) {
+            var today = new Date();
+            var diffTime = today - date;
+            var diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            // Tarih formatını DD-MM-YYYY olarak ayarla
+            var day = date.getDate().toString().padStart(2, '0');
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var year = date.getFullYear();
+            var formattedDate = day + '-' + month + '-' + year;
+            
+            if (index === 0) {
+                return 'Bugün';
+            } else if (index === 1) {
+                return 'Dün';
+            } else if (index === 2) {
+                return 'Dünden Bir Gün Önce';
+            } else if (index === 3) {
+                return 'Dünden İki Gün Önce';
+            } else if (index === 4) {
+                return 'Dünden Üç Gün Önce';
+            } else if (index === 5) {
+                return 'Dünden Dört Gün Önce';
+            } else if (index === 6) {
+                return 'Geçen Hafta';
+            } else if (index === 7) {
+                return 'Geçen Haftadan Bir Gün Önce';
+            } else {
+                // Tarih formatında göster (DD-MM-YYYY)
+                return formattedDate;
+            }
+        }
+        
+        // Panel isimlerini dinamik olarak güncelle
+        function updatePanelTitles(isKriptoProject) {
+            var today = new Date();
+            var panelIndex = 0;
+            
+            console.log('updatePanelTitles çağrıldı, isKriptoProject:', isKriptoProject);
+            
+            // Tüm card-header elementlerini bul
+            var headers = document.querySelectorAll('.card-header .title-text');
+            console.log('Panel güncelleme için bulunan header sayısı:', headers.length);
+            
+            headers.forEach(function(header, index) {
+                var originalTitle = header.getAttribute('data-original-title');
+                console.log('Panel', index, 'Orijinal başlık:', originalTitle);
+                
+                // Eğer başlık "Bugün", "Dün" veya tarih formatında ise
+                if (isDateTitle(originalTitle)) {
+                    var targetDate;
+                    
+                    if (isKriptoProject) {
+                        // Kripto projesi: Normal günlere göre (7 gün)
+                        targetDate = new Date(today);
+                        targetDate.setDate(today.getDate() - panelIndex);
+                    } else {
+                        // Borsa projesi: İş günlerine göre (5 gün)
+                        // panelIndex yerine gerçek iş günü sayısını hesapla
+                        targetDate = getPreviousBusinessDay(today, panelIndex);
+                    }
+                    
+                    var panelTitle = formatPanelTitle(targetDate, panelIndex, isKriptoProject);
+                    console.log('Panel', index, 'panelIndex:', panelIndex, 'Yeni başlık:', panelTitle, 'Tarih:', targetDate.toDateString());
+                    header.textContent = panelTitle;
+                    panelIndex++;
+                } else {
+                    console.log('Panel', index, 'Tarih formatında değil, atlandı:', originalTitle);
+                }
+            });
+        }
+        
+        // Panel başlığını formatla
+        function formatPanelTitle(date, index, isKriptoProject) {
+            var day = date.getDate().toString().padStart(2, '0');
+            var month = (date.getMonth() + 1).toString().padStart(2, '0');
+            var year = date.getFullYear();
+            var formattedDate = day + '-' + month + '-' + year;
+            
+            if (index === 0) {
+                return 'Bugün';
+            } else {
+                // Borsa projesi için "Dün" yerine gerçek tarih göster
+                return formattedDate;
+            }
+        }
+
+        // Robot Parametreleri için +- buton fonksiyonları
+        window.sayiArttir = function(inputId) {
+            var input = document.getElementById(inputId);
+            if (!input) return;
+            
+            // Türkçe formatındaki sayıyı parse et (100.000 -> 100000)
+            var value = parseFloat(input.value.replace(/\./g, '').replace(',', '.'));
+            if (isNaN(value)) value = 0;
+            
+            // Her parametre için özel artış miktarları
+            var artisMiktari = 1; // varsayılan
+            var formatla = false;
+            
+            switch(inputId) {
+                case 'bistSerbestNakit':
+                case 'viopSerbestNakit':
+                case 'maksIslemHacmi':
+                case 'crossCheckUyariLimiti':
+                case 'crossCheckDurdurmaLimiti':
+                    artisMiktari = 10000;
+                    formatla = true;
+                    break;
+                case 'dropSure':
+                    artisMiktari = 10;
+                    formatla = false;
+                    break;
+                case 'crossCheckFrekansi':
+                    artisMiktari = 60;
+                    formatla = false;
+                    break;
+                case 'maksPozisyonSayisi':
+                case 'maxOrderBookTimeDifferenceMs':
+                case 'orderDelayMs':
+                case 'slippageProtection':
+                case 'orderTimeoutSec':
+                    artisMiktari = 1;
+                    formatla = false;
+                    break;
+            }
+            
+            value += artisMiktari;
+            
+            // Sayıyı formatla
+            if (formatla) {
+                input.value = value.toLocaleString('tr-TR');
+            } else {
+                input.value = value.toString();
+            }
+        };
+        
+        window.sayiAzalt = function(inputId) {
+            var input = document.getElementById(inputId);
+            if (!input) return;
+            
+            // Türkçe formatındaki sayıyı parse et (100.000 -> 100000)
+            var value = parseFloat(input.value.replace(/\./g, '').replace(',', '.'));
+            if (isNaN(value)) value = 0;
+            
+            // Her parametre için özel azalış miktarları
+            var azalisMiktari = 1; // varsayılan
+            var formatla = false;
+            
+            switch(inputId) {
+                case 'bistSerbestNakit':
+                case 'viopSerbestNakit':
+                case 'maksIslemHacmi':
+                case 'crossCheckUyariLimiti':
+                case 'crossCheckDurdurmaLimiti':
+                    azalisMiktari = 10000;
+                    formatla = true;
+                    break;
+                case 'dropSure':
+                    azalisMiktari = 10;
+                    formatla = false;
+                    break;
+                case 'crossCheckFrekansi':
+                    azalisMiktari = 60;
+                    formatla = false;
+                    break;
+                case 'maksPozisyonSayisi':
+                case 'maxOrderBookTimeDifferenceMs':
+                case 'orderDelayMs':
+                case 'slippageProtection':
+                case 'orderTimeoutSec':
+                    azalisMiktari = 1;
+                    formatla = false;
+                    break;
+            }
+            
+            value -= azalisMiktari;
+            if (value < 0) value = 0;
+            
+            // Sayıyı formatla
+            if (formatla) {
+                input.value = value.toLocaleString('tr-TR');
+            } else {
+                input.value = value.toString();
+            }
+        };
+        
+        window.yuzdeArttir = function(inputId) {
+            var input = document.getElementById(inputId);
+            if (!input) return;
+            
+            // Yüzde değerini parse et (10,00% -> 10.00)
+            var value = parseFloat(input.value.replace(/[^\d,]/g, '').replace(',', '.'));
+            if (isNaN(value)) value = 0;
+            
+            // Her parametre için özel artış miktarları
+            var artisMiktari = 0.01; // varsayılan %0.01
+            var decimalPlaces = 2;
+            
+            switch(inputId) {
+                case 'dominasyonOrani':
+                case 'teminatOrani':
+                    artisMiktari = 1.00; // %1.00
+                    decimalPlaces = 2;
+                    break;
+                case 'dropOran':
+                    artisMiktari = 0.05; // %0.05
+                    decimalPlaces = 2;
+                    break;
+                case 'nemaFaizi':
+                    artisMiktari = 0.50; // %0.50
+                    decimalPlaces = 2;
+                    break;
+                case 'bistKomisyon':
+                case 'viopKomisyon':
+                    artisMiktari = 0.001;
+                    decimalPlaces = 3;
+                    break;
+            }
+            
+            value += artisMiktari;
+            input.value = value.toFixed(decimalPlaces).replace('.', ',') + '%';
+        };
+        
+        window.yuzdeAzalt = function(inputId) {
+            var input = document.getElementById(inputId);
+            if (!input) return;
+            
+            // Yüzde değerini parse et (10,00% -> 10.00)
+            var value = parseFloat(input.value.replace(/[^\d,]/g, '').replace(',', '.'));
+            if (isNaN(value)) value = 0;
+            
+            // Her parametre için özel azalış miktarları
+            var azalisMiktari = 0.01; // varsayılan %0.01
+            var decimalPlaces = 2;
+            
+            switch(inputId) {
+                case 'dominasyonOrani':
+                case 'teminatOrani':
+                    azalisMiktari = 1.00; // %1.00
+                    decimalPlaces = 2;
+                    break;
+                case 'dropOran':
+                    azalisMiktari = 0.05; // %0.05
+                    decimalPlaces = 2;
+                    break;
+                case 'nemaFaizi':
+                    azalisMiktari = 0.50; // %0.50
+                    decimalPlaces = 2;
+                    break;
+                case 'bistKomisyon':
+                case 'viopKomisyon':
+                    azalisMiktari = 0.001;
+                    decimalPlaces = 3;
+                    break;
+            }
+            
+            value -= azalisMiktari;
+            if (value < 0) value = 0;
+            
+            input.value = value.toFixed(decimalPlaces).replace('.', ',') + '%';
+        };
+        
+        window.sayiYazarken = function(input) {
+            // Sadece sayı ve virgül girişine izin ver
+            input.value = input.value.replace(/[^\d,]/g, '');
+        };
+        
+        window.sayiFormatla = function(input) {
+            var value = input.value.replace(/[^\d,]/g, '');
+            if (value) {
+                var numValue = parseFloat(value.replace(',', '.'));
+                if (!isNaN(numValue)) {
+                    input.value = numValue.toLocaleString('tr-TR');
+                }
+            }
+        };
+        
+        window.percentInputHandler = function(input) {
+            // Sadece sayı, virgül ve % girişine izin ver
+            input.value = input.value.replace(/[^\d,%.]/g, '');
+            
+            // % işareti yoksa ekle
+            if (!input.value.includes('%')) {
+                input.value = input.value + '%';
+            }
+        };
     </script>
 </body>
 </html>
